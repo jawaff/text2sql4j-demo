@@ -1,0 +1,68 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+.DS_Store
+node_modules
+**/dist
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+*.class
+*.bak
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# IntelliJ
+*.iml
+.idea/
+*.iws
+*.ipr
+
+.factorypath
+
+# Eclipse
+.classpath
+.project
+.settings/
+.externalToolBuilders/
+
+# Maven
+*.versionsBackup
+dependency-reduced-pom.xml
+target/
+
+# Extra
+.svn/
+*/.svn
+.DS_Store
+docker/.gradle/
+docker/gradle
+docker/tmp/
+docker/tmpdata
+tmpdata
+
+# Unit test generated files
+file-uploads

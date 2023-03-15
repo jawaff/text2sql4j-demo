@@ -1,0 +1,14 @@
+type: object
+properties:
+  title:
+    type: string
+  genre:
+    type: string
+  summary:
+    type: string
+  releaseYear:
+    type: integer
+  cast:
+    type: array
+    items:
+      $ref: "../actors/Actor.yaml"

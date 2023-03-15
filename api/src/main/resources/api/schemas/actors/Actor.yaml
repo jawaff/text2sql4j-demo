@@ -1,0 +1,8 @@
+type: object
+properties:
+  name:
+    type: string
+  age:
+    type: integer
+  isMale:
+    type: boolean

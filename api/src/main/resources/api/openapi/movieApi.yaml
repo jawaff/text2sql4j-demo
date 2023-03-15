@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Movie API
+  description: The movie API for the translator.
+  version: 0.0.1
+servers:
+  - url: '/'
+paths:
+  /movies:
+    get:
+      summary: get movies
+      operationId: getMovies
+      tags:
+        - test
+      parameters:
+        - name: input
+          in: query
+          required: true
+          description: The input query to be used for movie retrieval.
+          schema:
+            type: string
+            maxLength: 512
+      responses:
+        '200':
+          description: movies response
+          content:
+            application/json:
+              schema:
+                $ref: '../schemas/movies/Movies.yaml'
+        '400':
+          description: invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '../schemas/core/ErrorResponse.yaml'
+        '500':
+          description: server error
+          content:
+            application/json:
+              schema:
+                $ref: '../schemas/core/ErrorResponse.yaml'
