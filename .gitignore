@@ -71,3 +71,4 @@ file-uploads
 raw-files/
 
 .ipynb_checkpoints/
+picard_model.pt
