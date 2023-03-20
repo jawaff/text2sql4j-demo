@@ -25,6 +25,7 @@ dependencies {
         implementation("ch.qos.logback:logback-classic:$logbackVersion")
         implementation("org.slf4j:slf4j-api:$slf4jVersion")
         implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinVersion")
     }
 
     // Use JUnit Jupiter for testing.

@@ -66,3 +66,8 @@ tmpdata
 
 # Unit test generated files
 file-uploads
+
+# Model Files
+raw-files/
+
+.ipynb_checkpoints/
