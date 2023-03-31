@@ -12,7 +12,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 
-    implementation(platform("ai.djl:bom:0.21.0"))
     implementation("ai.djl:api")
     implementation("ai.djl.pytorch:pytorch-engine")
     implementation("ai.djl.huggingface:tokenizers")

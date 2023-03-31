@@ -19,19 +19,21 @@ val slf4jVersion = "1.7.30"
 val junitVersion = "5.9.1"
 val junitPlatformVersion = "1.9.1"
 val kotlinVersion = "1.8.10"
+val kotlinxVersion = "1.6.4"
 
 dependencies {
     constraints {
         implementation("ch.qos.logback:logback-classic:$logbackVersion")
         implementation("org.slf4j:slf4j-api:$slf4jVersion")
         implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxVersion")
     }
 
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
-    testImplementation("org.junit.platform:junit-platform-launcher:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
 }
 
 // JVM target applied to all Kotlin tasks across all subprojects
