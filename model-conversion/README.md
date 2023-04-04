@@ -9,7 +9,7 @@ further training depending on the dependencies between the encoder and decoder. 
 TODO: Create a requirements.txt file
 
 - Python 3.7
-- Pytorch
+- Pytorch 
 - Jupyter Notebook
 - Huggingface Transformers
 
