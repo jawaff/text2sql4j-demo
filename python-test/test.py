@@ -21,9 +21,9 @@ class SqlLogitsProcessor(LogitsProcessor):
 
 
 
-config = AutoConfig.from_pretrained('../raw-files/')
-tokenizer = AutoTokenizer.from_pretrained('../raw-files/')
-model = AutoModelForSeq2SeqLM.from_pretrained('../raw-files/', config=config)
+config = AutoConfig.from_pretrained('../raw-files/t5.1.1.lm100k.large')
+tokenizer = AutoTokenizer.from_pretrained('../raw-files/t5.1.1.lm100k.large')
+model = AutoModelForSeq2SeqLM.from_pretrained('../raw-files/t5.1.1.lm100k.large', config=config)
 
 logits_processor_list = LogitsProcessorList([SqlLogitsProcessor(tokenizer)])
 inputs = ['Get concerts with short names. | concert_singer | stadium : stadium_id, location, name, capacity, highest, lowest, average | singer : singer_id, name, country, song_name, song_release_year, age, is_male | concert : concert_id, concert_name, theme, stadium_id, year | singer_in_concert : concert_id, singer_id']
