@@ -6,9 +6,19 @@ from logits import PicardMode, PicardLogitsProcessor
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
+def restrict_vocab_by_prefix(batch_id, beam_ids, expected_prefix_ids):
+    if len(beam_ids) < len(expected_prefix_ids):
+        return [expected_prefix_ids[len(beam_ids)]]
+    return None
+
 class Translator:
     def __init__(self):
-        self.config = AutoConfig.from_pretrained(os.path.join(dir_path, '../raw-files/t5.1.1.lm100k.large'))
+        self.config = AutoConfig.from_pretrained(
+            os.path.join(dir_path, '../raw-files/t5.1.1.lm100k.large'),
+            num_beams=8,
+            num_beam_groups=1,
+            diversity_penalty=0.0,
+        )
         self.tokenizer = AutoTokenizer.from_pretrained(os.path.join(dir_path, '../raw-files/t5.1.1.lm100k.large'))
         self.model = AutoModelForSeq2SeqLM.from_pretrained(os.path.join(dir_path, '../raw-files/t5.1.1.lm100k.large'), config=self.config)
 
@@ -22,7 +32,7 @@ class Translator:
 
     def translate(self, expected_prefix, raw_input):
         # </s> should be excluded from the list!
-        forced_prefix_ids = self.tokenizer(expected_prefix, max_length=512, truncation=True, return_tensors='pt').input_ids[0][:-1]
+        forced_prefix_ids = self.tokenizer(expected_prefix, max_length=512, truncation=True).input_ids[:-1]
 
         logits_processor = PicardLogitsProcessor(
             tokenizer=self.tokenizer,
@@ -30,15 +40,15 @@ class Translator:
             max_tokens_to_check=self.max_tokens_to_check,
             mode=self.picard_mode,
             forced_prefix_ids=forced_prefix_ids,
-            stop_words_ids=self.stop_words_ids
+            stop_words_ids=self.stop_words_ids,
+            is_incremental=True,
         )
 
         input = self.tokenizer(raw_input, max_length=512, truncation=True, return_tensors="pt")
         outputs = self.model.generate(
             **input,
-            num_beams=8,
+            prefix_allowed_tokens_fn=lambda batch_id, beam_ids: restrict_vocab_by_prefix(batch_id, beam_ids, forced_prefix_ids),
             logits_processor=LogitsProcessorList([logits_processor]),
-            min_length=10,
-            max_length=512,
+            max_new_tokens=512,
         )
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)

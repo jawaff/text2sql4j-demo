@@ -10,7 +10,7 @@ from enum import Enum
 
 ParserElement.enablePackrat()
 
-LPAR, RPAR, COMMA = map(Suppress, "(),")
+LPAR, RPAR, COMMA, PIPE, SEMICOLON = map(Suppress, "(),|;")
 DOT, STAR = map(Literal, ".*")
 select_stmt = Forward().setName("select statement")
 
@@ -21,6 +21,7 @@ keywords = {
     UNION ALL AND INTERSECT EXCEPT COLLATE ASC DESC ON USING NATURAL INNER CROSS LEFT OUTER JOIN AS INDEXED NOT
     SELECT DISTINCT FROM WHERE GROUP BY HAVING ORDER LIMIT OFFSET OR CAST ISNULL NOTNULL NULL IS BETWEEN ELSE END
     CASE WHEN THEN EXISTS IN LIKE GLOB REGEXP MATCH ESCAPE CURRENT_TIME CURRENT_DATE CURRENT_TIMESTAMP TRUE FALSE
+    NULLS FIRST LAST
     """.split()
 }
 vars().update(keywords)
@@ -77,6 +78,7 @@ expr_term = (
     )
     | Group(identifier("col_tab") + DOT + identifier("col"))
     | Group(identifier("col"))
+    | LPAR + select_stmt + RPAR + Optional(Optional(AS) + table_alias)
 )
 
 NOT_NULL = Group(NOT + NULL)
@@ -131,6 +133,7 @@ ordering_term = Group(
     expr("order_key")
     + Optional(COLLATE + collation_name("collate"))
     + Optional(ASC | DESC)("direction")
+    + Optional(NULLS + (FIRST | LAST))("null_order")
 )
 
 join_constraint = Group(
@@ -147,7 +150,6 @@ single_source = (
     + Optional(Optional(AS) + table_alias("table_alias*"))
     + Optional(INDEXED + BY + index_name("name") | NOT + INDEXED)("index")
     | (LPAR + select_stmt + RPAR + Optional(Optional(AS) + table_alias))
-    | (LPAR + join_source + RPAR)
 )
 
 join_source <<= (
@@ -166,7 +168,7 @@ select_core = (
     SELECT
     + Optional(DISTINCT | ALL)
     + Group(delimitedList(result_column))("columns")
-    + Optional(FROM + join_source("from*"))
+    + FROM + join_source("from*")
     + Optional(WHERE + expr("where_expr"))
     + Optional(
         GROUP
@@ -188,36 +190,13 @@ select_stmt << (
 
 select_stmt.ignore(comment)
 
-class FieldType(Enum):
-    TEXT = 1
-    REAL = 2
-    INTEGER = 3
-    BLOB = 4
-
-class Field:
-    def __init__(self, name, type):
-        self.name = name
-        self.type = type
-
-class Table:
-    def __init__(self, alias, fields):
-        self.alias = alias
-        self.fields
-
-class ParseResult(Enum):
-    INVALID = 1
-    VALID = 2
-    INCOMPLETE = 3
-
-
-class SqlParser:
-    def __init__(self):
-        pass
-
-    def check_next_token(self, token):
-        pass
-
-
+# This represents the output of the sql query.
+generated_select_stmt = (
+    identifier("database")
+    + Optional(PIPE)
+    + Optional(select_stmt)
+    + Optional(SEMICOLON)
+)
 
 def main():
     tests = """\

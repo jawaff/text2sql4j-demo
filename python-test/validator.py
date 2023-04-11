@@ -1,54 +1,31 @@
-from transformers.models.auto import AutoTokenizer
+from typing import List
 from enum import Enum
 import re
+from transformers.models.auto import AutoTokenizer
+from parser import generated_select_stmt
+import random
 
 class ValidationResult(Enum):
     INVALID = 1
     PARTIAL_VALID = 2
     COMPLETE_VALID = 3
 
-class ClauseType(Enum):
-    SELECT = 1
-    FROM = 2
-    WHERE = 3
-    ORDER_BY = 4
+def re_rsplit(pattern, text, maxsplit):
+    if maxsplit < 1 or not pattern.search(text): # If split is 0 or less, or upon no match
+        return [text]                            # Return the string itself as a one-item list
+    prev = len(text)                             # Previous match value start position
+    cnt = 0                                      # A match counter
+    result = []                                  # Output list
+    for m in reversed(list(pattern.finditer(text))):
+        result.append(text[m.end():prev])        # Append a match to resulting list
+        prev = m.start()                         # Set previous match start position
+        cnt += 1                                 # Increment counter
+        if cnt == maxsplit:                      # Break out of for loop if...
+            break                                # ...match count equals max split value
+    result.append(text[:prev])                   # Append the text chunk from start
+    return list(reversed(result))                      # Return reversed list
 
-KEYWORD_TO_CLAUSE_TYPE = {'select': ClauseType.SELECT, 'from': ClauseType.FROM, 'where': ClauseType.WHERE, 'order by': ClauseType.ORDER_BY}
-
-class TokenBuffer:
-    def __init__(self, tokenizer: AutoTokenizer, eos_token_id: int):
-        self.tokenizer = tokenizer
-        self.eos_token_id = eos_token_id
-        self.buffer = []
-        self.text = ""
-
-    def next_token(self, top_token: int) -> bool:
-        '''
-        Adds the current token to the clause's buffer. When we are sure we've assembled a word, then we move that word
-        along with the delimiter to the clause's text field.
-        Returns true if a word has been completed and false otherwise.
-        '''
-        if top_token == self.eos_token_id:
-            self.text += self.tokenizer.decode(self.buffer)
-            self.buffer.clear()
-            return True
-
-        self.buffer.append(top_token)
-        # We attempt to decode the buffer after each token so that we can determine if the word has been completed.
-        tmp = self.tokenizer.decode(self.buffer)
-
-        # Positive lookahead splits and preserves the delimiter on the left of the split. Spaces and closing parenthesis
-        # are indicators that we have finished assembling a complete word.
-        tmp = re.split(r'(?<=\s|\))', tmp)
-        # If we've hit a delimiter, then we move the buffer's text into the text for this clause.
-        if len(tmp) > 1:
-            self.text += tmp[0]
-            self.buffer = [top_token]
-            return True
-        else:
-            return False
-
-class Validator:
+class SqlValidator:
     def __init__(self, tokenizer: AutoTokenizer, eos_token_id: int):
         '''
         Parameters
@@ -60,19 +37,82 @@ class Validator:
         '''
         self.tokenizer = tokenizer
         self.eos_token_id = eos_token_id
-        # Ex: If we start a new clause, then we add information about that clause to the stack.
-        # If we enter a sub-clause, then we add information about that clause to the stack.
-        # If we complete a clause, then we remove that clause from the stack.
-        self.buffer_stack = [TokenBuffer(self.tokenizer, self.eos_token_id)]
+        self.delimiter_pattern = re.compile(r'(?<=\s|,|\(|\))')
 
-        # Each major clause is started with an identifying word.
-        self.keyword_ids_to_clause_type = {clause_type: tokenizer(keyword).input_ids[:-1] for keyword, clause_type in KEYWORD_TO_CLAUSE_TYPE.items()}
+        self.text = ""
+        # Keeps track of the number of ids that have been added to the text.
+        self.ids_in_text_count = 0
 
-    def validate_next_token(self, top_token: int) -> ValidationResult:
-        # If true, we have a new complete word to process.
-        if self.buffer_stack[-1].next_token(top_token):
-            #print(self.buffer_stack[-1].text)
-            #print(self.buffer_stack[-1].buffer)
-            return ValidationResult.COMPLETE_VALID
+    def validate_text(self, text: str, parse_all: bool = False) -> ValidationResult:
+        try:
+            #print(text)
+            #print(dir(generated_select_stmt))
+            parse_tree = generated_select_stmt.parseString(text, parseAll = parse_all)
+            #print(f'Valid: {parse_tree}')
+            #print(dir(parse_tree))
+            return ValidationResult.COMPLETE_VALID if parse_all else ValidationResult.PARTIAL_VALID
+        except Exception as e:
+            print(f'Invalid Text: {text}')
+            print(e)
+            return ValidationResult.INVALID
+
+    def determine_completed_text(self, cur_buffer: List[int]) -> List[str]:
+        buffer_text = self.tokenizer.decode(cur_buffer, skip_special_tokens = True)
+        # Positive lookahead splits and preserves the delimiter on the left of the split.
+        # When we find a delimiter, we are able to assure that the text before it is complete.
+        split_buffer_text = re_rsplit(self.delimiter_pattern, buffer_text, 1)
+        # The resulting list will preserve delimiters and should at most have two elements.
+        return split_buffer_text
+
+    def cache_completed_text(self, input_ids: List[int]):
+        '''
+        Attempts to find what text in the provided input_ids is complete and caches it.
+        This must take in the complete list of input_ids that was passed to the validator
+        and those ids must not include the token! We only want to work with the ids of the inputs
+        that are set in stone.
+        '''
+        # Everything in cur_buffer is set in stone. These are the previously selected values for this beam.
+        # We should attempt to add these to our cached text if we've reached a delimiter.
+        cur_buffer = input_ids[self.ids_in_text_count:]
+        split_buffer_text = self.determine_completed_text(cur_buffer)
+        if len(split_buffer_text) > 1:
+            self.text += split_buffer_text[0]
+            # (is empty check)
+            if not split_buffer_text[1]:
+                self.ids_in_text_count = len(input_ids)
+            else:
+                # If the second element is not empty, then one of the tokens in input_ids might be incomplete
+                # and will not be cached.
+                self.ids_in_text_count = len(input_ids) - 1
+
+    def validate_next_token(self, input_ids: List[int], top_token: int) -> ValidationResult:
+        if top_token == self.eos_token_id:
+            text = self.tokenizer.decode(input_ids, skip_special_tokens = True)
+            return self.validate_text(text, parse_all = False)
         else:
-            return ValidationResult.PARTIAL_VALID
+            # Buffer does not include the text we've already decoded completely!
+            cur_buffer = input_ids[self.ids_in_text_count:] + [top_token]
+            split_buffer_text = self.determine_completed_text(cur_buffer)
+            # If we've hit a delimiter, then we are able to potentially parse the text to check validity.
+            if len(split_buffer_text) > 1:
+                result = self.validate_text(self.text + split_buffer_text[0])
+            else:
+                result = ValidationResult.PARTIAL_VALID
+
+            # Attempts to cache text we know that is complete in order to reduce redundant decoding.
+            self.cache_completed_text(input_ids)
+
+            return result
+
+
+            #TODO WE NEED TO figure out the token buffer strategy!!!!?!?!?!!!!!!!!!
+            #Decoding everything every single time is completely unmaintainable and it is a fact that the input ids
+            #that are provided are building upon the previous ones!!!
+            #The top token can't be added to the buffer because we don't know if it will be chosen or not!
+
+
+            #return ValidationResult.PARTIAL_VALID
+            ids = input_ids + [top_token]
+            text = self.tokenizer.decode(ids, skip_special_tokens = True)
+            return self.validate_text(text, parse_all = False)
+

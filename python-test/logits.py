@@ -1,5 +1,5 @@
 from typing import List
-#from tenacity import retry, wait_random_exponential, stop_after_delay, before_sleep_log
+from collections import defaultdict
 import torch
 from transformers.models.auto import AutoTokenizer
 from transformers import LogitsProcessor, LogitsProcessorList
@@ -7,7 +7,7 @@ import logging
 from enum import Enum
 from abc import ABC, abstractmethod
 
-from validator import Validator, ValidationResult
+from validator import SqlValidator, ValidationResult
 
 logger = logging.getLogger(__name__)
 
@@ -88,7 +88,7 @@ class PicardLogitsProcessor(LogitsProcessor):
         # Maps a batch_id to a validator for that batch.
         # This is for keeping track of what clause is currently being processed for each batch.
 
-        self.batch_validators = {}
+        self.batch_validators = defaultdict(lambda: SqlValidator(self.tokenizer, self.eos_token_id))
 
     def _parse_next_token(self, batch_id: int, input_ids: List[int], top_token: int) -> ValidationResult:
         for stop_word_ids in self.stop_words_ids:
@@ -97,16 +97,9 @@ class PicardLogitsProcessor(LogitsProcessor):
             if top_token == stop_word_ids[-1]:
                 if len(stop_word_ids) == 1:
                     return ValidationResultInfo(batch_id, top_token, ValidationResult.INVALID)
-                else:
-                    print(f'compare: {1-len(stop_word_ids)}')
-                    print(self.tokenizer.decode(stop_word_ids[:-1]))
-                    print(self.tokenizer.decode(input_ids[1-len(stop_word_ids):]))
-                    print(stop_word_ids[:-1])
-                    print(input_ids[1-len(stop_word_ids):])
-                    print(stop_word_ids[:-1] == input_ids[1-len(stop_word_ids):])
-                    if stop_word_ids[:-1] == list(input_ids[1-len(stop_word_ids):]):
-                        print('match!')
-                        return ValidationResultInfo(batch_id, top_token, ValidationResult.INVALID)
+                # Handles cases where the stop word is composed of a sequence of ids.
+                elif stop_word_ids[:-1] == list(input_ids[1-len(stop_word_ids):]):
+                    return ValidationResultInfo(batch_id, top_token, ValidationResult.INVALID)
 
         # TODO First ensure tokens follow template and outside of that check individual expressions.
         # We might only get partial tokens, so who knows how we're going to deal with that? Maybe at every space we
@@ -115,16 +108,20 @@ class PicardLogitsProcessor(LogitsProcessor):
         input_ids_len = len(input_ids)
         # Checks if we're still forcing the prefix and if the provided token doesn't match what is expected.
         if self.forced_prefix_ids_len > input_ids_len and self.forced_prefix_ids[input_ids_len] != top_token:
-            force = self.tokenizer.decode(self.forced_prefix_ids[input_ids_len])
-            tok = self.tokenizer.decode(top_token)
-            print(f'denied: {force} != {tok}')
+            #force = self.tokenizer.decode(self.forced_prefix_ids[input_ids_len])
+            #tok = self.tokenizer.decode(top_token)
+            #print(f'denied: {force} != {tok}')
             return ValidationResultInfo(batch_id, top_token, ValidationResult.INVALID)
-        else:
+        elif input_ids_len <= self.forced_prefix_ids_len:
+            # Why validate further if the input is to be forced?
             return ValidationResultInfo(batch_id, top_token, ValidationResult.COMPLETE_VALID)
+        else:
+            # After the forced prefix, we use a SQL validator to check if the tokens are valid, partially valid or invalid.
+            validation_result = self.batch_validators[batch_id].validate_next_token(input_ids, top_token)
+            return ValidationResultInfo(batch_id, top_token, validation_result)
 
     def _feed(self, input_ids: List[int], token: int) -> bool:
         result = self._parse_next_token(1, input_ids, token)
-
         if result.feed_result == ValidationResult.INVALID:
             logger.debug(f"parsing failure: {input_ids + [token]}")
             return False
@@ -181,17 +178,18 @@ class PicardLogitsProcessor(LogitsProcessor):
         input_id_batches: torch.Tensor,
         top_token_batches: torch.Tensor,
     ) -> None:
-        print(f"batch mask top k: {len(top_token_batches)} {len(input_id_batches)}")
+        #print(f"batch mask top k: {len(top_token_batches)} {len(input_id_batches)}")
         results = []
         for batch_id, (input_id_batch, top_token_batch) in enumerate(zip(input_id_batches, top_token_batches)):
-            decoded_input_id_batch = self.tokenizer.decode(input_id_batch, clean_up_tokenization_spaces=False, skip_special_tokens=False)
-            decoded_top_token_batch = self.tokenizer.batch_decode(top_token_batch, clean_up_tokenization_spaces=False, skip_special_tokens=False)
-            print(decoded_input_id_batch)
-            print('-')
-            print(decoded_top_token_batch)
-            print(';')
+            #decoded_input_id_batch = self.tokenizer.decode(input_id_batch, clean_up_tokenization_spaces=False, skip_special_tokens=False)
+            #decoded_top_token_batch = self.tokenizer.batch_decode(top_token_batch, clean_up_tokenization_spaces=False, skip_special_tokens=False)
+            #print(decoded_input_id_batch)
+            #print('-')
+            #print(decoded_top_token_batch)
+            #print(';')
+            #print(f'BatchId: {batch_id}')
             for top_token in top_token_batch:
-                result = self._parse_next_token(batch_id, input_id_batch, top_token)
+                result = self._parse_next_token(batch_id, list(input_id_batch), top_token)
                 results.append(result)
 
         #global counter
