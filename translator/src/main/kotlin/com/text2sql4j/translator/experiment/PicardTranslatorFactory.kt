@@ -1,8 +1,7 @@
-package com.text2sql4j.translator
+package com.text2sql4j.translator.experiment
 
 import ai.djl.Model
 import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer
-import ai.djl.modality.nlp.qa.QAInput
 import ai.djl.translate.TranslateException
 import ai.djl.translate.Translator
 import ai.djl.translate.TranslatorFactory

@@ -1,9 +1,13 @@
-package com.text2sql4j.translator
+package com.text2sql4j.translator.experiment
 
 import ai.djl.Model
+import ai.djl.inference.Predictor
 import ai.djl.modality.Classifications
 import ai.djl.modality.nlp.qa.QAInput
 import ai.djl.repository.zoo.Criteria
+import ai.djl.repository.zoo.ZooModel
+import ai.djl.training.util.ProgressBar
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -11,11 +15,12 @@ import java.nio.file.Paths
 
 class TranslatorTest {
     @Test
+    @Disabled
     fun importModel() {
         val input = QAInput("asdf", "asdf")
 
-        //val translator = PicardTranslator()
-        //val criteria: Criteria<QAInput, String> = Criteria.builder()
+//        val translator = PicardTranslator()
+//        val criteria: Criteria<QAInput, String> = Criteria.builder()
 //            .setTypes(QAInput::class.java, String::class.java)
 //            .optModelPath(Paths.get("/home/jake/School/NLP/text2sql4j/raw-files/picard_model.pt"))
 //            .optTranslator(translator)
@@ -27,18 +32,20 @@ class TranslatorTest {
     }
 
     @Test
+    @Disabled
     fun importModel2() {
         val modelDir: Path = Paths.get("C:\\Users\\Cake\\Documents\\NLP\\text2sql4j\\raw-files\\picard_model.pt")
         val model = Model.newInstance("model name")
         model.load(modelDir)
 
-        //val translator = PicardTranslator()
-        //val predictor: Predictor<QAInput, String> = model.newPredictor(translator)
-        //val output = predictor.predict(QAInput("asdf", "asdf"))
-        //println(output)
+//        val translator = PicardTranslator()
+//        val predictor: Predictor<QAInput, String> = model.newPredictor(translator)
+//        val output = predictor.predict(QAInput("asdf", "asdf"))
+//        println(output)
     }
 
     @Test
+    @Disabled
     fun importModel3() {
 
 
@@ -68,6 +75,7 @@ class TranslatorTest {
     }
 
     @Test
+    @Disabled
     fun importModel4() {
         val maskToken = "<pad>"
         val criteria: Criteria<String, Classifications> = Criteria.builder()

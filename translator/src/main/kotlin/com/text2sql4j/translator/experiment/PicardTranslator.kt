@@ -1,16 +1,10 @@
-package com.text2sql4j.translator
+package com.text2sql4j.translator.experiment
 
-import ai.djl.huggingface.tokenizers.Encoding
 import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer
-import ai.djl.modality.nlp.qa.QAInput
 import ai.djl.ndarray.NDArray
 import ai.djl.ndarray.NDList
-import ai.djl.ndarray.index.NDIndex
-import ai.djl.repository.zoo.ModelZoo
-import ai.djl.training.ParameterStore
 import ai.djl.translate.Translator
 import ai.djl.translate.TranslatorContext
-import java.nio.file.Paths
 import java.util.*
 
 

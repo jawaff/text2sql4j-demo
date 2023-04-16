@@ -11,5 +11,5 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("ai.djl:bom:0.21.0"))
+
 }

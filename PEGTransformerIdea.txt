@@ -1,0 +1,40 @@
+Standard autoregressive transformers for text generation generate a single token at a time, which works reasonably well with an LL(1) parser.
+LL(1) parsers only need to look at the current token in order to do their job. The problem with LL(1) is that there are limitations with
+left-recursion and so workarounds in the grammar are required to adequately represent some language of text.
+
+PEG parsers are generally considered to be better because they are able to handle arbitrary complexity. They utilize recursive descent
+where each rule in the grammar corresponds with a function that exists in the parser.
+
+What if there was a way to make an autoregressive transformer generate data in a similar way as a PEG parser processes the data?
+Code generation would be vastly improved since the transformer would have more training on the tree of tokens that make up
+the grammar. This may also improve other kinds of text generation. The only catch would be that we would need a sophisticated
+parser in the processing of the outputs of each move through the decoder. One good outcome would be that it would be
+easier to debug the transformer since we would see its intentions for the descending/ascending of the tree.
+
+Since the T5 model does have support for unknown tokens it might be possible to reuse it for creating a parser that understands
+a grammar. The model and the grammar could then be shipped together for use in real-world applications.
+
+
+PEG Transformer Example:
+
+NL Input -> Encoder -> (hiddent layers + ROOT) -> Decoder -> Language Model Head of grammar tokens + tree transitions + word tokens
+
+Sample Grammar:
+
+ROOT -> SELECT_STMT
+
+SELECT_STMT -> "select" COLUMNS "from" TABLES
+
+COLUMNS -> COLUMN (, COLUMN)*
+
+COLUMN -> \w+.\w+
+
+TABLES -> TABLE ("as")? (\w+)?
+
+Sample Output:
+
+ROOT SELECT_STMT COLUMNS COLUMN p.age ASCEND COLUMN p.height ASCEND COLUMN p.name ASCEND ASCEND TABLES people as p ASCEND ASCEND ASCEND
+
+Vs:
+
+select p.age, p.height, p.name from people as p

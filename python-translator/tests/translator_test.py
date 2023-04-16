@@ -3,7 +3,8 @@ import os
 from transformers.models.auto import AutoConfig, AutoTokenizer
 from translator import Translator
 
-translator = Translator()
+dir_path = os.path.dirname(os.path.realpath(__file__))
+translator = Translator(os.path.join(dir_path, '../../raw-files/t5.1.1.lm100k.large'))
 
 class TranslatorTest(unittest.TestCase):
 

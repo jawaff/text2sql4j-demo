@@ -1,5 +1,7 @@
 package com.text2sql4j.translator
 
-interface SqlTranslator {
-    suspend fun translate(text: String): String
+import com.text2sql4j.translator.models.SqlTranslateInputs
+
+interface SqlTranslator : AutoCloseable {
+    fun translate(inputs: SqlTranslateInputs): String
 }

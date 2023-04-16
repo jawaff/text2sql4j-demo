@@ -69,6 +69,7 @@ file-uploads
 
 # Model Files
 raw-files/
+djl-serving/
 
 .ipynb_checkpoints/
 picard_model.pt

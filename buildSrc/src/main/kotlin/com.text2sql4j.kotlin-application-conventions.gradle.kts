@@ -10,17 +10,6 @@ plugins {
     application
 }
 
-val vertxVersion = "4.4.0"
-
 dependencies {
-    constraints {
-        implementation("io.vertx:vertx-core:$vertxVersion")
-        implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
-        implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
-        implementation("io.vertx:vertx-web:$vertxVersion")
-        implementation("io.vertx:vertx-web-openapi:$vertxVersion")
-        implementation("io.vertx:vertx-web-validation:$vertxVersion")
-        implementation("io.vertx:vertx-pg-client:$vertxVersion")
-        implementation("io.vertx:vertx-sql-client:$vertxVersion")
-    }
+
 }

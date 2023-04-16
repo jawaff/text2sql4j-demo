@@ -8,4 +8,5 @@
  */
 
 rootProject.name = "text2sql4j"
-include("api", "translator")
+include("api")
+include("translator")

@@ -1,4 +1,4 @@
-package com.text2sql4j.translator
+package com.text2sql4j.translator.experiment
 
 import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer
 import ai.djl.modality.Classifications

@@ -17,12 +17,6 @@ class ValidationResultInfo:
         self.top_token = top_token
         self.feed_result = feed_result
 
-class PicardMode(Enum):
-    LEXING = 1,
-    PARSING_WITHOUT_GUARDS = 2,
-    PARSING_WITH_GUARDS = 3,
-    PARSING_WITH_GUARDS_AND_TYPE_CHECKING = 4,
-
 class PicardLogitsProcessor(LogitsProcessor):
     '''
     This LogitsProcessor is inspired by the one that is used in the Picard project.
@@ -47,7 +41,6 @@ class PicardLogitsProcessor(LogitsProcessor):
         eos_token_id: int,
         filter_value: float = -float("Inf"),
         max_tokens_to_check: int = 1,
-        mode: str = PicardMode.PARSING_WITH_GUARDS,
         is_incremental: bool = True,
         forced_prefix_ids: List[int] = [],
         stop_words_ids: List[List[int]] = []
@@ -64,8 +57,6 @@ class PicardLogitsProcessor(LogitsProcessor):
             By default it's negative infinity, because there probably shouldn't be a lower value than the filtered tokens.
         max_tokens_to_check:
             This is the top k value. This processor checks the tokens with the top k probabilities.
-        mode:
-            The parsing mode. This specifies what type of checks will be made to validate the generated SQL.
         is_incremental:
             Determines whether the logits processing as done incrementally or only when the </s> token is encountered.
         forced_prefix_ids:
@@ -79,7 +70,6 @@ class PicardLogitsProcessor(LogitsProcessor):
         self.eos_token_id = eos_token_id
         self.filter_value = filter_value
         self.max_tokens_to_check = max_tokens_to_check
-        self.mode = mode
         self.is_incremental = is_incremental
         self.forced_prefix_ids = forced_prefix_ids
         self.forced_prefix_ids_len = len(self.forced_prefix_ids)
@@ -87,7 +77,6 @@ class PicardLogitsProcessor(LogitsProcessor):
 
         # Maps a batch_id to a validator for that batch.
         # This is for keeping track of what clause is currently being processed for each batch.
-
         self.batch_validators = defaultdict(lambda: SqlValidator(self.tokenizer, self.eos_token_id))
 
     def _parse_next_token(self, batch_id: int, input_ids: List[int], top_token: int) -> ValidationResult:
@@ -101,23 +90,16 @@ class PicardLogitsProcessor(LogitsProcessor):
                 elif stop_word_ids[:-1] == list(input_ids[1-len(stop_word_ids):]):
                     return ValidationResultInfo(batch_id, top_token, ValidationResult.INVALID)
 
-        # TODO First ensure tokens follow template and outside of that check individual expressions.
-        # We might only get partial tokens, so who knows how we're going to deal with that? Maybe at every space we
-        # do a is valid check?
-
         input_ids_len = len(input_ids)
         # Checks if we're still forcing the prefix and if the provided token doesn't match what is expected.
         if self.forced_prefix_ids_len > input_ids_len and self.forced_prefix_ids[input_ids_len] != top_token:
-            #force = self.tokenizer.decode(self.forced_prefix_ids[input_ids_len])
-            #tok = self.tokenizer.decode(top_token)
-            #print(f'denied: {force} != {tok}')
             return ValidationResultInfo(batch_id, top_token, ValidationResult.INVALID)
         elif input_ids_len <= self.forced_prefix_ids_len:
             # Why validate further if the input is to be forced?
             return ValidationResultInfo(batch_id, top_token, ValidationResult.COMPLETE_VALID)
         else:
             # After the forced prefix, we use a SQL validator to check if the tokens are valid, partially valid or invalid.
-            validation_result = self.batch_validators[batch_id].validate_next_token(input_ids, top_token)
+            validation_result = self.batch_validators[batch_id].validate_next_token(input_ids, top_token, self.is_incremental)
             return ValidationResultInfo(batch_id, top_token, validation_result)
 
     def _feed(self, input_ids: List[int], token: int) -> bool:
@@ -129,7 +111,7 @@ class PicardLogitsProcessor(LogitsProcessor):
             logger.debug(f"parsing partial: {input_ids + [token]}")
             return True
         elif result.feed_result == ValidationResult.COMPLETE_VALID:
-            logger.info(f"parsing success: {input_ids + [token]}")
+            logger.debug(f"parsing success: {input_ids + [token]}")
             return True
         else:
             # unexpected parsing result
@@ -178,25 +160,11 @@ class PicardLogitsProcessor(LogitsProcessor):
         input_id_batches: torch.Tensor,
         top_token_batches: torch.Tensor,
     ) -> None:
-        #print(f"batch mask top k: {len(top_token_batches)} {len(input_id_batches)}")
         results = []
         for batch_id, (input_id_batch, top_token_batch) in enumerate(zip(input_id_batches, top_token_batches)):
-            #decoded_input_id_batch = self.tokenizer.decode(input_id_batch, clean_up_tokenization_spaces=False, skip_special_tokens=False)
-            #decoded_top_token_batch = self.tokenizer.batch_decode(top_token_batch, clean_up_tokenization_spaces=False, skip_special_tokens=False)
-            #print(decoded_input_id_batch)
-            #print('-')
-            #print(decoded_top_token_batch)
-            #print(';')
-            #print(f'BatchId: {batch_id}')
             for top_token in top_token_batch:
                 result = self._parse_next_token(batch_id, list(input_id_batch), top_token)
                 results.append(result)
-
-        #global counter
-        #counter += 1
-        #print(counter)
-        #if counter >= 20:
-        #    oausdhfpiubasdf
 
         for result in results:
             if result.feed_result == ValidationResult.INVALID:
@@ -205,7 +173,7 @@ class PicardLogitsProcessor(LogitsProcessor):
             elif result.feed_result == ValidationResult.PARTIAL_VALID:
                 logger.debug(f"parsing partial: {input_id_batches[result.batch_id].tolist() + [result.top_token]}")
             elif result.feed_result == ValidationResult.COMPLETE_VALID:
-                logger.info(f"parsing success: {input_id_batches[result.batch_id].tolist() + [result.top_token]}")
+                logger.debug(f"parsing success: {input_id_batches[result.batch_id].tolist() + [result.top_token]}")
             else:
                 # unexpected parsing result
                 raise ValueError("unexpected picard parsing result")

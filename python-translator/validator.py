@@ -1,3 +1,4 @@
+import logging
 from typing import List
 from enum import Enum
 import re
@@ -45,15 +46,10 @@ class SqlValidator:
 
     def validate_text(self, text: str, parse_all: bool = False) -> ValidationResult:
         try:
-            #print(text)
-            #print(dir(generated_select_stmt))
             parse_tree = generated_select_stmt.parseString(text, parseAll = parse_all)
-            #print(f'Valid: {parse_tree}')
-            #print(dir(parse_tree))
             return ValidationResult.COMPLETE_VALID if parse_all else ValidationResult.PARTIAL_VALID
         except Exception as e:
-            print(f'Invalid Text: {text}')
-            print(e)
+            logging.debug(f'Invalid Text: {text}')
             return ValidationResult.INVALID
 
     def determine_completed_text(self, cur_buffer: List[int]) -> List[str]:
@@ -85,10 +81,11 @@ class SqlValidator:
                 # and will not be cached.
                 self.ids_in_text_count = len(input_ids) - 1
 
-    def validate_next_token(self, input_ids: List[int], top_token: int) -> ValidationResult:
+    def validate_next_token(self, input_ids: List[int], top_token: int, is_incremental=False) -> ValidationResult:
         if top_token == self.eos_token_id:
             text = self.tokenizer.decode(input_ids, skip_special_tokens = True)
-            return self.validate_text(text, parse_all = False)
+            result = self.validate_text(text, parse_all = True)
+            return result
         else:
             # Buffer does not include the text we've already decoded completely!
             cur_buffer = input_ids[self.ids_in_text_count:] + [top_token]
@@ -103,16 +100,3 @@ class SqlValidator:
             self.cache_completed_text(input_ids)
 
             return result
-
-
-            #TODO WE NEED TO figure out the token buffer strategy!!!!?!?!?!!!!!!!!!
-            #Decoding everything every single time is completely unmaintainable and it is a fact that the input ids
-            #that are provided are building upon the previous ones!!!
-            #The top token can't be added to the buffer because we don't know if it will be chosen or not!
-
-
-            #return ValidationResult.PARTIAL_VALID
-            ids = input_ids + [top_token]
-            text = self.tokenizer.decode(ids, skip_special_tokens = True)
-            return self.validate_text(text, parse_all = False)
-
