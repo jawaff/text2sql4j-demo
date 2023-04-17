@@ -36,12 +36,22 @@ class HuggingFaceService:
         self.initialized = True
 
     def translate(self, inputs):
-        expected_prefix = '<pad>' + inputs.get_as_string("expectedPrefix")
-        raw_input = inputs.get_as_string("query")
-        is_incremental = inputs.get_as_string("isIncremental") == "True"
-        sql = self.translator.translate(expected_prefix, raw_input, is_incremental)
         outputs = Output()
-        outputs.add(sql, key="sql")
+        if inputs.is_batch():
+            batches = inputs.get_batches()
+            raw_inputs = [batch.get_as_string("query") for batch in batches]
+            # Assumes that each batch is using the same "expectedPrefix" and "isIncremental" settings.
+            expected_prefix = '<pad>' + batches[0].get_as_string("expectedPrefix")
+            is_incremental = batches[0].get_as_string("isIncremental") == "True"
+            sql_outputs = self.translator.translate(expected_prefix, raw_inputs, is_incremental)
+            for i, sql_output in enumerate(sql_outputs):
+                outputs.add(sql_output, key="sql", batch_index=i)
+        else:
+            expected_prefix = '<pad>' + inputs.get_as_string("expectedPrefix")
+            raw_input = inputs.get_as_string("query")
+            is_incremental = inputs.get_as_string("isIncremental") == "True"
+            sql_output = self.translator.translate(expected_prefix, [raw_input], is_incremental)[0]
+            outputs.add(sql_output, key="sql")
         return outputs
 
 _service = HuggingFaceService()

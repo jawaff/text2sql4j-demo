@@ -42,13 +42,14 @@ class Translator:
             is_incremental=is_incremental,
         )
 
-        input = self.tokenizer(raw_input, max_length=512, truncation=True, return_tensors="pt")
-        outputs = self.model.generate(
-            **input,
-            prefix_allowed_tokens_fn=lambda batch_id, beam_ids: restrict_vocab_by_prefix(batch_id, beam_ids, forced_prefix_ids),
-            logits_processor=LogitsProcessorList([logits_processor]),
-            max_new_tokens=512,
-        )
+        input = self.tokenizer(raw_input, padding=True, max_length=512, truncation=True, return_tensors="pt")
+        with torch.no_grad():
+            outputs = self.model.generate(
+                **input,
+                prefix_allowed_tokens_fn=lambda batch_id, beam_ids: restrict_vocab_by_prefix(batch_id, beam_ids, forced_prefix_ids),
+                logits_processor=LogitsProcessorList([logits_processor]),
+                max_new_tokens=512,
+            )
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
 # Intended to be used by a spark job.

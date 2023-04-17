@@ -6,8 +6,6 @@ further training depending on the dependencies between the encoder and decoder. 
 
 ## Prerequisites
 
-TODO: Create a requirements.txt file
-
 - Python 3.7
 - Pytorch 
 - Jupyter Notebook

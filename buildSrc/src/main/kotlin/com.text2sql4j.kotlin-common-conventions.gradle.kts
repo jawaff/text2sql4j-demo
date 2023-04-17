@@ -49,6 +49,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testImplementation("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
+    testImplementation("org.junit.platform:junit-platform-suite-api:$junitPlatformVersion")
+    testImplementation("org.junit.platform:junit-platform-suite-engine:$junitPlatformVersion")
 }
 
 // JVM target applied to all Kotlin tasks across all subprojects
