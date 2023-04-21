@@ -3,16 +3,26 @@
  */
 package com.text2sql4j.api
 
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.text2sql4j.api.models.codecs.SqlTranslateInputsCodec
+import com.text2sql4j.api.verticles.MigrationVerticle
 import com.text2sql4j.api.verticles.RESTVerticle
+import com.text2sql4j.api.verticles.TranslatorVerticle
+import com.text2sql4j.translator.models.SqlTranslateInputs
 import io.vertx.core.Vertx
 import io.vertx.core.VertxOptions
+import io.vertx.core.json.jackson.DatabindCodec
 import io.vertx.kotlin.coroutines.await
+import io.vertx.pgclient.PgConnectOptions
+import io.vertx.pgclient.PgPool
+import io.vertx.sqlclient.PoolOptions
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.nio.file.Paths
 import java.util.concurrent.atomic.AtomicReference
 
 private val LOGGER: Logger = LoggerFactory.getLogger("MainKt")
@@ -21,7 +31,7 @@ private val vertxRef: AtomicReference<Vertx?> = AtomicReference()
 @DelicateCoroutinesApi
 fun main() {
     runBlocking {
-        startVertx()
+        startVertx(doInsertDataset = true)
     }
 
     Runtime.getRuntime().addShutdownHook(object : Thread() {
@@ -35,14 +45,54 @@ fun main() {
     })
 }
 
-suspend fun startVertx(): Vertx {
+suspend fun startVertx(doInsertDataset: Boolean): Vertx {
     val vertxOptions = VertxOptions()
     val vertx = Vertx.vertx(vertxOptions)
     vertxRef.set(vertx)
 
+    DatabindCodec.mapper()
+        .registerKotlinModule()
+
+    vertx.eventBus().registerDefaultCodec(SqlTranslateInputs::class.java, SqlTranslateInputsCodec())
+
+    val databaseHost = "localhost"
+    val databasePort = 5432
+    val databaseName = "movies"
+    val databaseUsername = "postgres"
+    val databasePassword = "postgres"
+    val connectionPoolSize = 20
+
+    val pgPool = PgPool.pool(
+        vertx,
+        PgConnectOptions()
+            .setHost(databaseHost)
+            .setPort(databasePort)
+            .setDatabase(databaseName)
+            .setUser(databaseUsername)
+            .setPassword(databasePassword),
+        PoolOptions().setMaxSize(connectionPoolSize).setShared(true)
+    )
+
     coroutineScope {
         launch {
-            vertx.deployVerticle(RESTVerticle())
+            vertx.deployVerticle(
+                MigrationVerticle(
+                    "$databaseHost:$databasePort",
+                    databaseName,
+                    databaseUsername,
+                    databasePassword
+                )
+            )
+                .onFailure { killPrematurely("Failed to deploy Migration Verticle", it) }
+                .await()
+        }
+        launch {
+            vertx.deployVerticle(TranslatorVerticle(Paths.get("../python-translator/")))
+                .onFailure { killPrematurely("Failed to deploy Translator Verticle", it) }
+                .await()
+        }
+        launch {
+            vertx.deployVerticle(RESTVerticle(pgPool, doInsertDataset))
                 .onFailure { killPrematurely("Failed to deploy REST Server", it) }
                 .await()
         }

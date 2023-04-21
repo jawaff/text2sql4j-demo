@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  demo-database:
+    image: postgres:14.1-alpine
+    container_name: demo-database
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/opt/pg_data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=movies
+      - PGDATA=/opt/pg_data

@@ -10,6 +10,12 @@ plugins {
     `java-library`
 }
 
-dependencies {
+val djlVersion = "0.21.0"
 
+dependencies {
+    constraints {
+        implementation("ai.djl.serving:serving:$djlVersion")
+    }
+
+    implementation(platform("ai.djl:bom:$djlVersion"))
 }

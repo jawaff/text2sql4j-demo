@@ -73,3 +73,5 @@ djl-serving/
 
 .ipynb_checkpoints/
 picard_model.pt
+
+docker/data/

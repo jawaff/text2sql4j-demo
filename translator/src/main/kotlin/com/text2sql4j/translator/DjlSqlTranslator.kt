@@ -5,26 +5,31 @@ import ai.djl.modality.Input
 import ai.djl.modality.Output
 import ai.djl.repository.zoo.Criteria
 import ai.djl.repository.zoo.ZooModel
-import com.fasterxml.jackson.module.kotlin.readValue
+import ai.djl.util.Utils
 import com.text2sql4j.translator.models.SqlTranslateInputs
-import io.vertx.core.json.jackson.DatabindCodec
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.lang.IllegalStateException
 import java.nio.file.Path
 
 class DjlSqlTranslator(modelPath: Path) : SqlTranslator {
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(DjlSqlTranslator::class.java)
+        private const val PYTHON_EXE_ENV_VAR = "PYTHON_EXECUTABLE"
     }
 
     private val model: ZooModel<Input, Output>
     private val predictor: Predictor<Input, Output>
 
     init {
+        val pythonExe = Utils.getenv(PYTHON_EXE_ENV_VAR)
+            ?: throw IllegalStateException("'$PYTHON_EXE_ENV_VAR' environment variable has not been set!")
+
         val criteria = Criteria.builder()
             .setTypes(Input::class.java, Output::class.java)
             .optModelPath(modelPath)
             .optEngine("Python")
+            .optOption("pythonExecutable", pythonExe)
             .build()
         this.model = criteria.loadModel()
         this.predictor = model.newPredictor()

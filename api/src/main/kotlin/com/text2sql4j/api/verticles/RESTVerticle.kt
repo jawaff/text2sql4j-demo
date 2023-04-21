@@ -1,20 +1,32 @@
 package com.text2sql4j.api.verticles
 
+import com.text2sql4j.api.models.ErrorResponse
+import com.text2sql4j.api.resources.MovieResource
+import com.text2sql4j.api.stores.MovieDatasetLoader
+import com.text2sql4j.api.stores.MovieStore
 import io.vertx.core.http.HttpServer
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.core.http.HttpServerOptions
+import io.vertx.core.json.jackson.DatabindCodec
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.FileSystemAccess
 import io.vertx.ext.web.handler.StaticHandler
+import io.vertx.ext.web.openapi.Operation
 import io.vertx.ext.web.openapi.RouterBuilder
 import io.vertx.kotlin.coroutines.await
+import io.vertx.kotlin.coroutines.dispatcher
+import io.vertx.pgclient.PgPool
+import kotlinx.coroutines.launch
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.lang.IllegalArgumentException
 import java.util.concurrent.atomic.AtomicReference
 
-class RESTVerticle : CoroutineVerticle() {
+class RESTVerticle(
+    private val pgPool: PgPool,
+    private val doInsertDataset: Boolean
+) : CoroutineVerticle() {
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(RESTVerticle::class.java)
         private const val API_PATH = "api"
@@ -42,10 +54,23 @@ class RESTVerticle : CoroutineVerticle() {
                 LOGGER.error("Failed to load OpenAPI Spec.", it)
             }
             .await()
-        routerBuilder.operation("getMovies").handler { ctx ->
-            LOGGER.info("asdfasdfasdf")
-            ctx.response().end("{\"blah blah blah\": \"steeeve\"}")
+
+        val movieStore = MovieStore(pgPool)
+        val movieResource = MovieResource(vertx.eventBus(), movieStore)
+
+        if (doInsertDataset) {
+            // We check to see if our database has movies in it before tests run.
+            // We need to load our dataset into the database if it hasn't already been done.
+            val moviesExist = movieStore.getMovies(null, 0, 1)
+                .isNotEmpty()
+            if (moviesExist) {
+                LOGGER.debug("Preparing Movie Dataset")
+                MovieDatasetLoader.loadDataset(movieStore)
+                LOGGER.debug("Done Preparing Movie Dataset")
+            }
         }
+
+        routerBuilder.operation("getMovies").coroutineHandler(movieResource::getMovies)
         globalRouter.route("/*").subRouter(routerBuilder.createRouter())
 
         val server = vertx.createHttpServer(HttpServerOptions().setPort(8081).setHost("localhost"))
@@ -62,6 +87,18 @@ class RESTVerticle : CoroutineVerticle() {
             ?.await()
     }
 
+    private fun Operation.coroutineHandler(fn: suspend (RoutingContext) -> Unit) {
+        handler { ctx ->
+            launch(ctx.vertx().dispatcher()) {
+                try {
+                    fn(ctx)
+                } catch (t: Throwable) {
+                    ctx.fail(t)
+                }
+            }
+        }
+    }
+
     private fun errorHandler(): (RoutingContext) -> Unit {
         return { ctx ->
             val statusCode = ctx.statusCode()
@@ -70,26 +107,18 @@ class RESTVerticle : CoroutineVerticle() {
             if (error != null) {
                 LOGGER.debug("Failed request", error)
             }
-            if (statusCode == 403) {
-                ctx.response()
-                    .setStatusCode(403)
-                    // TODO ErrorResponse
-                    .end("Unauthorized")
-            } else if (error == null) {
+            if (error == null) {
                 ctx.response()
                     .setStatusCode(statusCode)
-                    // TODO ErrorResponse
-                    .end("unknown")
+                    .end(DatabindCodec.mapper().writeValueAsString(ErrorResponse("unknown", "unknown")))
             } else {
                 when (error) {
                     is IllegalArgumentException -> ctx.response()
                         .setStatusCode(400)
-                        // TODO ErrorResponse
-                        .end("Invalid Request")
+                        .end(DatabindCodec.mapper().writeValueAsString(ErrorResponse("Invalid Request", message)))
                     else -> ctx.response()
                         .setStatusCode(statusCode)
-                        // TODO ErrorResponse
-                        .end("Internal Server Error")
+                        .end(DatabindCodec.mapper().writeValueAsString(ErrorResponse("Server Error", message)))
                 }
             }
         }

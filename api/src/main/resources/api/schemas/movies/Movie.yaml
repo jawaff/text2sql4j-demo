@@ -2,13 +2,18 @@ type: object
 properties:
   title:
     type: string
+  yearReleased:
+    type: integer
+  director:
+    type: string
+    nullable: true
+  producer:
+    type: string
+    nullable: true
+  studio:
+    type: string
+    nullable: true
+  colorProcess:
+    type: string
   genre:
     type: string
-  summary:
-    type: string
-  releaseYear:
-    type: integer
-  cast:
-    type: array
-    items:
-      $ref: "../actors/Actor.yaml"

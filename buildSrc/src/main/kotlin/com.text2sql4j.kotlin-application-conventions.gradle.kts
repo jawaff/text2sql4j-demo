@@ -10,6 +10,24 @@ plugins {
     application
 }
 
-dependencies {
+val postgresqlVersion = "42.2.18"
+val vertxVersion = "4.4.0"
+val flywayVersion = "7.5.2"
+val scramVersion = "2.1"
 
+dependencies {
+    constraints {
+        implementation("io.vertx:vertx-core:$vertxVersion")
+        implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
+        implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
+        implementation("io.vertx:vertx-web:$vertxVersion")
+        implementation("io.vertx:vertx-web-openapi:$vertxVersion")
+        implementation("io.vertx:vertx-web-validation:$vertxVersion")
+        implementation("io.vertx:vertx-pg-client:$vertxVersion")
+        implementation("io.vertx:vertx-sql-client:$vertxVersion")
+        implementation("org.postgresql:postgresql:$postgresqlVersion")
+        implementation("org.flywaydb:flyway-core:$flywayVersion")
+        implementation("com.ongres.scram:client:$scramVersion")
+        implementation("com.ongres.scram:common:$scramVersion")
+    }
 }

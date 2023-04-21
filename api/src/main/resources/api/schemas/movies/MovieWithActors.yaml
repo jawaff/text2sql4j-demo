@@ -1,0 +1,8 @@
+type: object
+properties:
+  movie:
+    $ref: "./Movie.yaml"
+  actors:
+    type: array
+    items:
+      $ref: "./Actor.yaml"

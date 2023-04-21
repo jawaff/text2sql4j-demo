@@ -13,20 +13,41 @@ paths:
       tags:
         - test
       parameters:
-        - name: input
+        - name: query
           in: query
           required: true
           description: The input query to be used for movie retrieval.
           schema:
             type: string
             maxLength: 512
+        - name: limit
+          in: query
+          required: false
+          description: The limit for paging.
+          schema:
+            type: integer
+            default: 100
+        - name: offset
+          in: query
+          required: false
+          description: The offset for paging.
+          schema:
+            type: integer
+            default: 0
       responses:
         '200':
           description: movies response
+          headers:
+            X-Total-Count:
+              description: The total count of the possible pageable movies
+              schema:
+                type: integer
+                format: int32
+                minimum: 0
           content:
             application/json:
               schema:
-                $ref: '../schemas/movies/Movies.yaml'
+                $ref: '../schemas/movies/MoviesResponse.yaml'
         '400':
           description: invalid input
           content:

@@ -1,0 +1,16 @@
+type: object
+properties:
+  name:
+    type: string
+  startYearOfWork:
+    type: integer
+    nullable: true
+  endYearOfWork:
+    type: integer
+    nullable: true
+  gender:
+    type: string
+    nullable: true
+  yearOfBirth:
+    type: integer
+    nullable: true

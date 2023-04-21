@@ -1,0 +1,9 @@
+type: object
+properties:
+  generatedSql:
+    type: string
+    nullable: true
+  moviesWithActors:
+    type: array
+    items:
+      $ref: "./MovieWithActors.yaml"

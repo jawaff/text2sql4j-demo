@@ -19,10 +19,9 @@ val logbackVersion = "1.2.3"
 val slf4jVersion = "1.7.30"
 val junitVersion = "5.9.1"
 val junitPlatformVersion = "1.9.1"
+val assertjVersion = "3.24.2"
 val kotlinVersion = "1.8.10"
 val kotlinxVersion = "1.6.4"
-
-val vertxVersion = "4.4.0"
 val jacksonVersion = "2.14.2"
 
 dependencies {
@@ -31,14 +30,6 @@ dependencies {
         implementation("org.slf4j:slf4j-api:$slf4jVersion")
         implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxVersion")
-        implementation("io.vertx:vertx-core:$vertxVersion")
-        implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
-        implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
-        implementation("io.vertx:vertx-web:$vertxVersion")
-        implementation("io.vertx:vertx-web-openapi:$vertxVersion")
-        implementation("io.vertx:vertx-web-validation:$vertxVersion")
-        implementation("io.vertx:vertx-pg-client:$vertxVersion")
-        implementation("io.vertx:vertx-sql-client:$vertxVersion")
         implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
         implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
@@ -51,6 +42,7 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
     testImplementation("org.junit.platform:junit-platform-suite-api:$junitPlatformVersion")
     testImplementation("org.junit.platform:junit-platform-suite-engine:$junitPlatformVersion")
+    testImplementation("org.assertj:assertj-core:$assertjVersion")
 }
 
 // JVM target applied to all Kotlin tasks across all subprojects

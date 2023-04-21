@@ -1,15 +1,20 @@
 package com.text2sql4j.translator.utils
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.text2sql4j.translator.models.SpiderQueryInfo
 import com.text2sql4j.translator.models.SpiderTable
-import io.vertx.core.json.jackson.DatabindCodec
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
 object SpiderUtil {
-    private val tables: List<SpiderTable> =
-        DatabindCodec.mapper().readValue(javaClass.getResourceAsStream("/spiderSql/tables.json"))
-    private val queryInfos: List<SpiderQueryInfo> =
-        DatabindCodec.mapper().readValue(javaClass.getResourceAsStream("/spiderSql/dev.json"))
+    private val mapper = ObjectMapper()
+        .registerKotlinModule()
+    private val tables: List<SpiderTable> = mapper.readValue(
+        javaClass.getResourceAsStream("/spiderSql/tables.json")!!
+    )
+    private val queryInfos: List<SpiderQueryInfo> = mapper.readValue(
+        javaClass.getResourceAsStream("/spiderSql/dev.json")!!
+    )
 
     fun getQueryInfoCount(): Int {
         return queryInfos.size

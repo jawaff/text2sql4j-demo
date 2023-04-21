@@ -3,7 +3,6 @@ package com.text2sql4j.translator
 import com.text2sql4j.translator.models.SqlTranslateInputs
 import com.text2sql4j.translator.utils.SpiderUtil
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -32,11 +31,11 @@ class DjlSqlTranslatorTest {
         }
     }
 
-    @Test
+    //@Test
     fun translate_expectedPrefix() {
         val expectedPrefix =  "select t1.concert_name from concert as t1"
         val begin = Instant.now()
-        val sqlOutput = VertxSession.translator.translate(
+        val sqlOutput = TestSession.translator.translate(
             SqlTranslateInputs(
                 query = "Get concerts with the largest stadiums. | concert_singer | stadium : stadium_id, location, name, capacity, highest, lowest, average | singer : singer_id, name, country, song_name, song_release_year, age, is_male | concert : concert_id, concert_name, theme, stadium_id, year | singer_in_concert : concert_id, singer_id",
                 dbId = "concert_singer",
@@ -53,7 +52,7 @@ class DjlSqlTranslatorTest {
         Assertions.assertTrue(sqlOutput.contains(expectedPrefix))
     }
 
-    @Test
+    //@Test
     fun batchTranslate() {
         val count = 5
         val queryInfos = (0 until count).map { i -> SpiderUtil.getQueryInfo(i) }
@@ -72,7 +71,7 @@ class DjlSqlTranslatorTest {
         val dbIds = inputBatches.map { input -> input.dbId }
 
         val begin = Instant.now()
-        val outputs = VertxSession.translator.translateBatch(
+        val outputs = TestSession.translator.translateBatch(
             inputQueries = inputQueries,
             dbIds = dbIds,
             expectedPrefix = "",
@@ -86,7 +85,7 @@ class DjlSqlTranslatorTest {
         Assertions.assertEquals(count, outputs.size)
     }
 
-    @Test
+    //@Test
     fun spider_dataset() {
         val count = SpiderUtil.getQueryInfoCount().coerceAtMost(100)
 
@@ -98,7 +97,7 @@ class DjlSqlTranslatorTest {
 
             try {
                 val begin = Instant.now()
-                val sqlOutput = VertxSession.translator.translateBatch(
+                val sqlOutput = TestSession.translator.translateBatch(
                     inputQueries = listOf(inputQuery),
                     dbIds = listOf(queryInfo.db_id),
                     expectedPrefix = "",

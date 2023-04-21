@@ -2,7 +2,9 @@
 
 ## Setup
 
-- Installt Python 3.7 and set `PYTHON_EXECUTABLE` environment variable.
+- Installt Python 3.7 and set `PYTHON_EXECUTABLE` environment variable. Deep Java Library uses that variable to install requirements
+and spawn Python processes that host the Huggingface translator. If running tests in an IDE, then the python executable
+needs to have less strict permissions (e.g. `sudo chmod 777 $PYTHON_EXECUTABLE`). 
 
 ```shell
 export PYTHON_EXECUTABLE=/home/jake/miniconda3/bin/python
@@ -82,8 +84,68 @@ python -m unittest discover -s tests -p '*_test.py'
 
 ### Java Tests
 
-Run the following command to execute the Java unit tests:
+Run the following commands to execute the Java unit tests:
 
 ```shell
+cd docker
+sudo docker-compose up -d
 ./gradlew test
 ```
+
+## References
+
+### PICARD
+
+This was the starting point for the demo. We're utilizing on of their T5 models and we took inspiration from the way
+that they made their constrained decoder that validates the generated sql.
+
+@misc{scholak2021picard,
+title={PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models},
+author={Torsten Scholak and Nathan Schucher and Dzmitry Bahdanau},
+year={2021},
+eprint={2109.05093},
+archivePrefix={arXiv},
+primaryClass={cs.CL}
+}
+
+### Huggingface Transformers
+
+The Huggingface transformers project is what we used to actually run the autoregressive text generation with a
+constrained decoder that validates the generated sql.
+
+@inproceedings{wolf-etal-2020-transformers,
+title = "Transformers: State-of-the-Art Natural Language Processing",
+author = "Thomas Wolf and Lysandre Debut and Victor Sanh and Julien Chaumond and Clement Delangue and Anthony Moi and Pierric Cistac and Tim Rault and Rémi Louf and Morgan Funtowicz and Joe Davison and Sam Shleifer and Patrick von Platen and Clara Ma and Yacine Jernite and Julien Plu and Canwen Xu and Teven Le Scao and Sylvain Gugger and Mariama Drame and Quentin Lhoest and Alexander M. Rush",
+booktitle = "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+month = oct,
+year = "2020",
+address = "Online",
+publisher = "Association for Computational Linguistics",
+url = "https://www.aclweb.org/anthology/2020.emnlp-demos.6",
+pages = "38--45"
+}
+
+### Spider SQL Dataset
+
+This was used for evaluating the text to sql translation.
+
+@misc{yu2019spider,
+title={Spider: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-SQL Task},
+author={Tao Yu and Rui Zhang and Kai Yang and Michihiro Yasunaga and Dongxu Wang and Zifan Li and James Ma and Irene Li and Qingning Yao and Shanelle Roman and Zilin Zhang and Dragomir Radev},
+year={2019},
+eprint={1809.08887},
+archivePrefix={arXiv},
+primaryClass={cs.CL}
+}
+
+### UCI Movie Dataset
+
+This was used to fill up the application database that is used for this demo.
+
+@misc{misc_movie_132,
+author       = {Wiederhold,Gio},
+title        = {{Movie}},
+year         = {1999},
+howpublished = {UCI Machine Learning Repository},
+note         = {{DOI}: \url{10.24432/C5SW2R}}
+}
