@@ -95,6 +95,7 @@ Run the following commands to execute the Java unit tests:
 ```shell
 cd docker
 sudo docker-compose up -d
+cd ..
 sh gradlew test
 ```
 
@@ -121,6 +122,7 @@ cd docker
 # The database needs to be empty in order for the movie dataset to be inserted on startup of the backend!
 sudo rm -rf data
 sudo docker-compose up -d
+cd ..
 sh gradlew run
 ```
 
