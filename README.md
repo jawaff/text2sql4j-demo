@@ -27,6 +27,25 @@ our movie table and returns the expected columns. We also injected a `DISTINCT O
 added as a subquery within the final query that has the `ORDER BY`, `LIMIT` and `OFFSET` clauses. All in all it works, 
 but the generated queries could be more efficient.
 
+## Demo Architecture
+
+The architecture of the demo is shown below. The user interacts with the Swagger UI to access the REST API.
+Calls to the REST API to get movies will first trigger text to SQL translation, then the SQL is modified to support
+the sorting/paging and finally used to query the database. The text to SQL translator will spawn Python processes
+as necessary based on the request load and Huggingface is used in those processes to do the actual translation.
+
+![Architecture](images/demo-architecture.drawio.png)
+
+## T5 Transformer
+
+Below is an overview of how the transformer is used. The query and the target database's schema is provided
+as inputs to the encoder. The encoder's hidden states are provided to the decoder. Then the decoder is used
+to determine the probabilities for the next token in the sequence, a logits processor chooses a token which
+is appended to the generated text and the generated text is then passed back into the decoder. The decoding
+process is done in an auto-regressive manner until an end token is encountered.
+
+![Transformer](images/t5-transformer.drawio.png)
+
 ## Failed Experiments
 
 ### Tree Sitter Parser

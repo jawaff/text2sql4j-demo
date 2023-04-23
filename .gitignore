@@ -81,3 +81,10 @@ docker/data/
 
 # Python cache
 */__pycache__/
+
+# Latex
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
