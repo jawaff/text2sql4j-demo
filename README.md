@@ -1,5 +1,60 @@
 # Text2SQL4j
 
+## Description
+
+This is a tech demo to experiment with making a text to sql translator using strategies taken from the
+[Picard](https://github.com/ServiceNow/picard) project. We utilized a [T5 model](https://huggingface.co/tscholak/3vnuv1vf) 
+trained by the Picard project and paired that with our own constrained decoder that was inspired by Picard's.
+The constrained decoder both uses a forced vocabulary to force a prefix in the generation and a logits processor
+that validates that the generated SQL is valid according to a parser that utilizes the [PyParsing](https://pypi.org/project/pyparsing/) 
+library. The parser we used was adapted from [this example](https://github.com/pyparsing/pyparsing/blob/master/examples/select_parser.py).
+
+The actual translator is written in Python using [Huggingface](https://huggingface.co/) and [PyTorch](https://pytorch.org/).
+Picard's model was set up to work with these libraries, so that was the easiest route available. [Deep Java Library](https://docs.djl.ai/docs/serving/index.html)
+was used to make that translation model available to the demo. It made serving up the model quite easy and claims
+to have support for starting multiple Python processes depending on the load. The main problem is that each
+Python process takes up 5gb of RAM and is effectively single-threaded (i.e. only one translation job at a time per loaded model/process).
+That's due to Python's Global Interpreter Lock and Huggingface can only get around that by changing their design.
+There's a lot of room for improvement with text generation libraries.
+
+Evaluation for the project was done in the `translator` module's at `com.text2sql4j.translator.DjlSqlTranslatorTest#spider_dataset`.
+That test uses the [Spider Dataset](https://yale-lily.github.io/spider) to test our translator and we have our own take on the content
+overlap algorithm that was used for evaluating the results of the translator against what is expected.
+
+The `api` module contains a REST server with a Swagger UI frontend and movie database that was used to explore real use
+cases for the translator. Our translator supports a forced prefix and we used that to ensure the generated SQL targets
+our movie table and returns the expected columns. We also injected a `DISTINCT ON` clause to the generated SQL and
+added as a subquery within the final query that has the `ORDER BY`, `LIMIT` and `OFFSET` clauses. All in all it works, 
+but the generated queries could be more efficient.
+
+## Failed Experiments
+
+### Tree Sitter Parser
+
+We attempted to use [tree-sitter](https://tree-sitter.github.io/tree-sitter/) as the parser for validating the generated
+SQL, but it was difficult to get working for the incremental parsing case. We instead used [PyParsing](https://pypi.org/project/pyparsing/)
+and the grammar found for that parser worked better with incomplete SQL, but still wasn't as good as it could have been.
+
+### TorchScript and Deep Java Library
+
+Transforming a Torch model into a ONNYX Runtime or TorchScript model so that it can be used by different libraries
+and languages seemed interesting. We wanted to explore this to see if it worked and while the experiment was a failure
+due to [Deep Java Library](https://docs.djl.ai/docs/serving/index.html) not having text generation support, there's
+still a lot of potential benefits of doing this. We've seen claims of the ONNYX Runtime having better performance than
+Torch due to how lighter weight it is. Using a model in a language that fully supports multithreading (i.e. not Python) 
+also can be more memory efficient because these models can be thread-safe and used by multiple threads at the same time.
+You might say that you only want a single thread to use a model at a time anyway due to the load on the GPU(s)/CPU(s),
+but in the case of Huggingface's `model.generate()`, the GPU(s)/CPU(s) won't be used 100% of the time while it is
+holding the model hostage (e.g. logit processors execute between the subsequent decoder passes).
+
+## Proposal
+
+The proposal for the project can be found in `./proposal/`. The proposal and what actually was developed is quite different.
+There was interest in developing an NLP solution for Java and while that was achieved we weren't able to get text
+generation working without relying on Python, so we had to mostly abandon Deep Java Library and OpenNLP. Deep Java Library 
+almost had what we needed, but doesn't have text generation support yet.
+It's disappointing how immature text generation is at the moment, but solutions still exist.
+
 ## Setup
 
 - Installt Python 3.7 and set `PYTHON_EXECUTABLE` environment variable. Deep Java Library uses that variable to install requirements
