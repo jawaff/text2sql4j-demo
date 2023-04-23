@@ -55,27 +55,44 @@ class MovieResource(private val eventBus: EventBus, private val movieStore: Movi
             LOGGER.warn("Failed to generate SQL for query: '$query'", t)
             null
         }
+        LOGGER.trace("Generated SQL: $generatedSql")
 
-        val moviesWithActors = movieStore.getMovies(
-            generatedSql = generatedSql,
-            offset = offset,
-            limit = limit
-        )
-            .map { movie ->
-                val actors = movieStore.getActorsInMovie(movie.title)
-                MovieWithActors(movie, actors)
-            }
+        var generatedSqlValid = generatedSql != null
+        val moviesTotalCountPair = try {
+            val movies = movieStore.getMovies(
+                generatedSql = generatedSql,
+                offset = offset,
+                limit = limit
+            )
+            val count = movieStore.getMovieCount(generatedSql)
+            movies to count
+        } catch (t: Throwable) {
+            LOGGER.warn("Generated SQL is invalid, using default query as fallback", t)
+            generatedSqlValid = false
+            // If the generated SQL causes a failure, then we retry with the default.
+            val movies = movieStore.getMovies(
+                generatedSql = null,
+                offset = offset,
+                limit = limit
+            )
+            val count = movieStore.getMovieCount(null)
+            movies to count
+        }
+        val moviesWithActors = moviesTotalCountPair.first.map { movie ->
+            val actors = movieStore.getActorsInMovie(movie.title)
+            MovieWithActors(movie, actors)
+        }
 
         val responseBody = MoviesResponse(
             generatedSql = generatedSql,
-            moviesWithActors = moviesWithActors
+            moviesWithActors = moviesWithActors,
+            generatedSqlValid = generatedSqlValid
         )
 
         ctx.response()
             .setStatusCode(200)
             .putHeader("Content-Type", "application/json; charset=utf-8")
-            // TODO Get the actual count!
-            .putHeader("X-Total-Count", "0")
+            .putHeader("X-Total-Count", moviesTotalCountPair.second.toString())
             .end(DatabindCodec.mapper().writeValueAsString(responseBody))
     }
 }

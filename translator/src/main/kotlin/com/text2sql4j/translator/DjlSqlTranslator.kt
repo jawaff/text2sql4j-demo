@@ -5,6 +5,7 @@ import ai.djl.modality.Input
 import ai.djl.modality.Output
 import ai.djl.repository.zoo.Criteria
 import ai.djl.repository.zoo.ZooModel
+import ai.djl.translate.TranslateException
 import ai.djl.util.Utils
 import com.text2sql4j.translator.models.SqlTranslateInputs
 import org.slf4j.Logger
@@ -44,20 +45,14 @@ class DjlSqlTranslator(modelPath: Path) : SqlTranslator {
     }
 
     override fun translate(inputs: SqlTranslateInputs): String {
-        return try {
-            val output = predictor.predict(
-                prepareInput(
-                    inputs.query,
-                    "${inputs.dbId} | ${inputs.expectedPrefix}",
-                    inputs.isIncremental
-                )
+        return predictor.predict(
+            prepareInput(
+                inputs.query,
+                "${inputs.dbId} | ${inputs.expectedPrefix}",
+                inputs.isIncremental
             )
-
-            output.getAsString("sql").removePrefix("${inputs.dbId} | ")
-        } catch (t: Throwable) {
-            t.printStackTrace()
-            throw t
-        }
+        )
+            .getAsString("sql").removePrefix("${inputs.dbId} | ")
     }
 
     override fun translateBatch(

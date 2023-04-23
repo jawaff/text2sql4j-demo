@@ -1,10 +1,13 @@
 package com.text2sql4j.api.stores
 
 import com.text2sql4j.api.models.movies.*
-import kotlinx.coroutines.runBlocking
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.BufferedReader
 
 object MovieDatasetLoader {
+    private val LOGGER: Logger = LoggerFactory.getLogger(MovieDatasetLoader::class.java)
+
     private fun loadResource(path: String): String {
         return javaClass.getResourceAsStream(path)
             .bufferedReader().use(BufferedReader::readText)
@@ -86,19 +89,24 @@ object MovieDatasetLoader {
                     null
                 }
                 val director = try {
-                    columns[4].substringAfter("D:")
+                    columns[3].substringAfter("D:")
                 } catch (t: Throwable) {
                     null
                 }
                 val producer = try {
-                    columns[5].substringAfter("P:")
+                    columns[4].substringAfter("P:")
+                        .substringAfter("PN:")
+                        .substringAfter("PZ:")
+                        .substringAfter("PU:")
+                        .trim()
                 } catch (t: Throwable) {
                     null
                 }
                 val studio = try {
                     // Attempts to strip 'St:' and 'S:'.
-                    val tmp = columns[6].substringAfter("St:")
+                    val tmp = columns[5].substringAfter("St:")
                         .substringAfter("S:")
+                        .substringAfter("SU:")
                         .trim()
                     // 'SD:' Shows up after the studio name sometimes.
                     if (tmp.contains(":")) {
@@ -109,8 +117,8 @@ object MovieDatasetLoader {
                 } catch (t: Throwable) {
                     null
                 }
-                val colorProcess = ColorProcess.fromCode(columns[7])
-                val genre = Genre.fromCode(columns[8])
+                val colorProcess = ColorProcess.fromCode(columns[6])
+                val genre = Genre.fromCode(columns[7])
 
                 if (title != null && yearReleased != null) {
                     Movie(
@@ -162,14 +170,18 @@ object MovieDatasetLoader {
             .toList()
     }
 
-    fun loadDataset(movieStore: MovieStore) {
-        runBlocking {
-            val actors = loadActorDataset()
-            movieStore.insertActors(actors)
-            val movies = loadMovieDataset()
-            movieStore.insertMovies(movies)
-            val casts = loadCastDataset()
-            movieStore.insertCasts(casts)
-        }
+    suspend fun loadDataset(movieStore: MovieStore) {
+        val actors = loadActorDataset()
+        LOGGER.info("Inserting ${actors.size} Actors")
+        movieStore.insertActors(actors)
+        LOGGER.info("Inserted ${actors.size} Actors")
+        val movies = loadMovieDataset()
+        LOGGER.info("Inserting ${movies.size} Movies")
+        movieStore.insertMovies(movies)
+        LOGGER.info("Inserted ${movies.size} Movies")
+        val casts = loadCastDataset()
+        LOGGER.info("Inserting ${casts.size} Casts")
+        movieStore.insertCasts(casts)
+        LOGGER.info("Inserted ${casts.size} Casts")
     }
 }

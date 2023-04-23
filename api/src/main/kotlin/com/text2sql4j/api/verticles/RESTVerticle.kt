@@ -59,14 +59,19 @@ class RESTVerticle(
         val movieResource = MovieResource(vertx.eventBus(), movieStore)
 
         if (doInsertDataset) {
+            LOGGER.info("Checking database for movies")
+
             // We check to see if our database has movies in it before tests run.
             // We need to load our dataset into the database if it hasn't already been done.
             val moviesExist = movieStore.getMovies(null, 0, 1)
                 .isNotEmpty()
+
             if (moviesExist) {
-                LOGGER.debug("Preparing Movie Dataset")
+                LOGGER.info("Database already has movies")
+            } else {
+                LOGGER.info("Preparing Movie Dataset")
                 MovieDatasetLoader.loadDataset(movieStore)
-                LOGGER.debug("Done Preparing Movie Dataset")
+                LOGGER.info("Done Preparing Movie Dataset")
             }
         }
 
@@ -77,7 +82,10 @@ class RESTVerticle(
             .requestHandler(globalRouter)
         httpServerRef.set(server)
         server.listen()
-            .onSuccess { println("Server started on port: ${server.actualPort()}") }
+            .onSuccess {
+                println("Server started on port: ${server.actualPort()}")
+                println("Access Swagger UI at: http://localhost:${server.actualPort()}/swagger-ui")
+            }
             .await()
     }
 

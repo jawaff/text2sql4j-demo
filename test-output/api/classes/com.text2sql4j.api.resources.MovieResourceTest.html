@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - MovieResourceTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>MovieResourceTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.text2sql4j.api.resources.html">com.text2sql4j.api.resources</a> &gt; MovieResourceTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">49.670s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">getMovies_paging_success()</td>
+<td class="success">35.154s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getMovies_success()</td>
+<td class="success">14.516s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>15:16:44.962 [Test worker] INFO  c.t.api.resources.MovieResourceTest - test getMovies_paging_success
+15:16:45.174 [vert.x-eventloop-thread-2] DEBUG i.n.h.c.compression.ZlibCodecFactory - -Dio.netty.noJdkZlibDecoder: false
+15:16:45.174 [vert.x-eventloop-thread-2] DEBUG i.n.h.c.compression.ZlibCodecFactory - -Dio.netty.noJdkZlibEncoder: false
+15:17:01.544 [Test worker @coroutine#9] DEBUG c.t.api.resources.MovieResourceTest - Response Body: {&quot;generatedSql&quot;:&quot;select t1.movie_title, t1.year_released, t1.director_name, t1.producer_name, t1.studio_name, t1.color_process, t1.genre from movies as t1 join movie_casts as t2 on t1.movie_title = t2.movie_title group by t1.director_name, t1.producer_name, t1.color_process&quot;,&quot;generatedSqlValid&quot;:true,&quot;moviesWithActors&quot;:[{&quot;movie&quot;:{&quot;title&quot;:&quot;6d54096a-8bf4-4c42-84a6-089d47b2e06c&quot;,&quot;yearReleased&quot;:1954,&quot;director&quot;:&quot;508a6205-ef02-40fa-9ba2-9a3cbaaa39f4&quot;,&quot;producer&quot;:&quot;b0abaeda-844f-4e2f-8bf9-8a4c56cb6f60&quot;,&quot;studio&quot;:&quot;80e8bd53-f90f-4a5e-b457-c0d2379893b6&quot;,&quot;colorProcess&quot;:&quot;CINEMASCOPE&quot;,&quot;genre&quot;:&quot;DRAMA&quot;},&quot;actors&quot;:[{&quot;name&quot;:&quot;c8fe6c00-1637-4b76-8213-f4e6af047974&quot;,&quot;startYearOfWork&quot;:-1196700853,&quot;endYearOfWork&quot;:57991553,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-1862787768},{&quot;name&quot;:&quot;c94c245d-9a6c-4427-b368-716001918964&quot;,&quot;startYearOfWork&quot;:-1756295028,&quot;endYearOfWork&quot;:-833403595,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:1601954896},{&quot;name&quot;:&quot;da186d4b-0622-4c1c-8322-900b516dcaa6&quot;,&quot;startYearOfWork&quot;:-870239608,&quot;endYearOfWork&quot;:1424072462,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-1987756475},{&quot;name&quot;:&quot;e8607e4f-0ee8-46dd-9c49-25763bd9be83&quot;,&quot;startYearOfWork&quot;:1717810762,&quot;endYearOfWork&quot;:1290276174,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-1130873608},{&quot;name&quot;:&quot;f2ae93bf-46a8-42a0-a1d1-9be447d84c9e&quot;,&quot;startYearOfWork&quot;:-1877467849,&quot;endYearOfWork&quot;:1753219919,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:1655215886}]},{&quot;movie&quot;:{&quot;title&quot;:&quot;21e945f0-8cac-4acf-83e9-79d26b9c1c01&quot;,&quot;yearReleased&quot;:1953,&quot;director&quot;:&quot;a0c196e4-1910-4507-aa34-448f8eeec2b3&quot;,&quot;producer&quot;:&quot;bb8f1370-5f77-49cb-ae5d-cb08348f1852&quot;,&quot;studio&quot;:&quot;3f16e579-1a17-4879-bd47-de9461f42521&quot;,&quot;colorProcess&quot;:&quot;VISTAVISION&quot;,&quot;genre&quot;:&quot;UNCATEGORIZED&quot;},&quot;actors&quot;:[{&quot;name&quot;:&quot;0e9f7606-59c6-44b7-ad92-02c5aacd1d2c&quot;,&quot;startYearOfWork&quot;:1031618987,&quot;endYearOfWork&quot;:-2049735862,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:-1098970902},{&quot;name&quot;:&quot;75a9bec8-ec35-42f1-b800-1187b9ac231a&quot;,&quot;startYearOfWork&quot;:-1387164240,&quot;endYearOfWork&quot;:-1444464793,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:1604056414},{&quot;name&quot;:&quot;acca46e0-8694-4912-8e34-8ed8556348eb&quot;,&quot;startYearOfWork&quot;:-1755811450,&quot;endYearOfWork&quot;:722863839,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:-1751180362},{&quot;name&quot;:&quot;b61b29f8-dc73-4f1b-a239-6b2e4219d7c0&quot;,&quot;startYearOfWork&quot;:-472150313,&quot;endYearOfWork&quot;:-1704386454,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:-1071133845},{&quot;name&quot;:&quot;ef41b78c-347a-4224-9636-797547ec4c10&quot;,&quot;startYearOfWork&quot;:-1267073886,&quot;endYearOfWork&quot;:-1497733086,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:-1785084959}]}]}
+15:17:01.545 [Test worker @coroutine#9] DEBUG c.t.api.resources.MovieResourceTest - Total Count: 5
+15:17:19.954 [Test worker @coroutine#9] DEBUG c.t.api.resources.MovieResourceTest - Response Body: {&quot;generatedSql&quot;:&quot;select t1.movie_title, t1.year_released, t1.director_name, t1.producer_name, t1.studio_name, t1.color_process, t1.genre from movies as t1 join movie_casts as t2 on t1.movie_title = t2.movie_title group by t1.director_name, t1.producer_name, t1.color_process&quot;,&quot;generatedSqlValid&quot;:true,&quot;moviesWithActors&quot;:[{&quot;movie&quot;:{&quot;title&quot;:&quot;ccc382be-8a46-4bfa-9183-a40267a9b653&quot;,&quot;yearReleased&quot;:1952,&quot;director&quot;:&quot;2446adb3-78c8-40b3-8233-05cee96bef18&quot;,&quot;producer&quot;:&quot;f1ba0b4b-af03-4191-979f-38120d2e97ce&quot;,&quot;studio&quot;:&quot;a75a3178-d4d1-4511-a70d-eabd5e6ba7aa&quot;,&quot;colorProcess&quot;:&quot;TECHNIRAMA&quot;,&quot;genre&quot;:&quot;ROMANTIC&quot;},&quot;actors&quot;:[{&quot;name&quot;:&quot;02c90b1d-2208-4676-ba59-aa5461d7577f&quot;,&quot;startYearOfWork&quot;:-1652516303,&quot;endYearOfWork&quot;:-1199471315,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-1883862311},{&quot;name&quot;:&quot;15460e55-9a28-4620-9c15-e6978586143a&quot;,&quot;startYearOfWork&quot;:1286314821,&quot;endYearOfWork&quot;:371910665,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:1740792788},{&quot;name&quot;:&quot;25eec0b1-4357-4923-87f3-92e076ee1998&quot;,&quot;startYearOfWork&quot;:-1973238618,&quot;endYearOfWork&quot;:-286817686,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:577667796},{&quot;name&quot;:&quot;7bc3b2e0-7584-4f87-919f-e339c3af9922&quot;,&quot;startYearOfWork&quot;:-1725636021,&quot;endYearOfWork&quot;:2052199531,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-1001504977},{&quot;name&quot;:&quot;a619f3bc-3df0-41ed-a791-cdd2859e8e51&quot;,&quot;startYearOfWork&quot;:-1945425892,&quot;endYearOfWork&quot;:-1184752682,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:139324593}]},{&quot;movie&quot;:{&quot;title&quot;:&quot;b0a460e0-7951-47fa-bcba-11d110cf2be5&quot;,&quot;yearReleased&quot;:1951,&quot;director&quot;:&quot;46ec0d33-1d88-4071-80a9-e5a64e8c3c81&quot;,&quot;producer&quot;:&quot;1d811157-1c0f-4968-920b-d4712796808f&quot;,&quot;studio&quot;:&quot;7520e24b-53ff-4d48-919d-482fef4f9868&quot;,&quot;colorProcess&quot;:&quot;PANAVISION&quot;,&quot;genre&quot;:&quot;ACTION&quot;},&quot;actors&quot;:[{&quot;name&quot;:&quot;1e0109c2-5e18-481c-9a54-8a50a2a89ded&quot;,&quot;startYearOfWork&quot;:1859192877,&quot;endYearOfWork&quot;:-401109223,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:-576467469},{&quot;name&quot;:&quot;96f726dd-9f78-44ff-b69f-c369d0b9e999&quot;,&quot;startYearOfWork&quot;:-1741737398,&quot;endYearOfWork&quot;:-76855051,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:357030636},{&quot;name&quot;:&quot;b2c8c011-4ea2-4730-9330-83e7bfca3240&quot;,&quot;startYearOfWork&quot;:1578795717,&quot;endYearOfWork&quot;:-1963631885,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:79482568},{&quot;name&quot;:&quot;b8a46a14-f0c6-4cd0-ae1c-6d7bbb4327e0&quot;,&quot;startYearOfWork&quot;:218764062,&quot;endYearOfWork&quot;:938990274,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:1688117129},{&quot;name&quot;:&quot;df8a40bd-11ba-4241-bd26-0ead5bf73d10&quot;,&quot;startYearOfWork&quot;:-921992042,&quot;endYearOfWork&quot;:336640167,&quot;gender&quot;:&quot;male&quot;,&quot;yearOfBirth&quot;:1843852478}]}]}
+15:17:19.954 [Test worker @coroutine#9] DEBUG c.t.api.resources.MovieResourceTest - Total Count: 5
+15:17:20.003 [Test worker] INFO  c.t.api.resources.MovieResourceTest - test getMovies_success
+15:17:34.488 [Test worker @coroutine#13] DEBUG c.t.api.resources.MovieResourceTest - Response Body: {&quot;generatedSql&quot;:&quot;select t1.movie_title, t1.year_released, t1.director_name, t1.producer_name, t1.studio_name, t1.color_process, t1.genre from movies as t1 join movie_casts as t2 on t1.movie_title = t2.movie_title where t1.year_released = 1950&quot;,&quot;generatedSqlValid&quot;:true,&quot;moviesWithActors&quot;:[{&quot;movie&quot;:{&quot;title&quot;:&quot;6d3bffd7-0003-462e-88f1-24efe45133dd&quot;,&quot;yearReleased&quot;:1950,&quot;director&quot;:&quot;fec5c3b7-f6ab-4c41-b5bd-dc3b4546ddf6&quot;,&quot;producer&quot;:&quot;2bd15c71-592b-4a24-a25c-ff6fb19bcc2c&quot;,&quot;studio&quot;:&quot;607a6742-3e68-4bb9-8480-6b390b2fbc5c&quot;,&quot;colorProcess&quot;:&quot;VISTAVISION&quot;,&quot;genre&quot;:&quot;BIOGRAPHICAL_PICTURE&quot;},&quot;actors&quot;:[{&quot;name&quot;:&quot;12adc4d5-f85f-464f-b67c-0265822f1c84&quot;,&quot;startYearOfWork&quot;:-1421459977,&quot;endYearOfWork&quot;:1679829274,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-584618713},{&quot;name&quot;:&quot;8cec9188-20f3-4775-9c36-f73b23344588&quot;,&quot;startYearOfWork&quot;:1618810942,&quot;endYearOfWork&quot;:1029732727,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-276750110},{&quot;name&quot;:&quot;c373de0d-a639-4bae-9957-fa3a0d80a22a&quot;,&quot;startYearOfWork&quot;:-675941069,&quot;endYearOfWork&quot;:-1685771467,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:492982115},{&quot;name&quot;:&quot;c570b60a-c7f6-440e-90bc-0eef68f41ecd&quot;,&quot;startYearOfWork&quot;:-1584660708,&quot;endYearOfWork&quot;:-1800127760,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:1153114737},{&quot;name&quot;:&quot;e266fd1e-c086-41a0-8ce2-76089fceee3d&quot;,&quot;startYearOfWork&quot;:1278988550,&quot;endYearOfWork&quot;:1801971955,&quot;gender&quot;:&quot;female&quot;,&quot;yearOfBirth&quot;:-29526284}]}]}
+15:17:34.488 [Test worker @coroutine#13] DEBUG c.t.api.resources.MovieResourceTest - Total Count: 1
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.0.2</a> at Apr 22, 2023, 3:17:35 PM</p>
+</div>
+</div>
+</body>
+</html>

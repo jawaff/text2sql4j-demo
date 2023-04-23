@@ -14,45 +14,54 @@ import java.lang.IllegalStateException
 
 class MovieStore(private val pgPool: PgPool) {
     companion object {
-        const val DB_ID = "movies"
+        const val DB_ID = "movies_db"
 
         private const val MOVIE_TABLE = "movies"
         private val MOVIE_COLUMNS = listOf(
-            "title", "year_released", "director_name", "producer_name", "studio_name", "color_process", "genre"
+            "movie_title", "year_released", "director_name", "producer_name", "studio_name", "color_process", "genre"
         )
         private val INSERT_MOVIE = "INSERT INTO $MOVIE_TABLE " +
-            "(${MOVIE_COLUMNS.joinToString(",")}) " +
-            "VALUES (${(1..MOVIE_COLUMNS.size).joinToString(",") { i -> "$$i"}})"
+                "(${MOVIE_COLUMNS.joinToString(",")}) " +
+                "VALUES (${(1..MOVIE_COLUMNS.size).joinToString(",") { i -> "$$i"}}) " +
+                "ON CONFLICT ON CONSTRAINT movies_primary_key DO NOTHING"
         private const val DELETE_MOVIES = "DELETE FROM $MOVIE_TABLE"
-        val EXPECTED_GET_MOVIES_PREFIX = "select ${MOVIE_COLUMNS.joinToString(",") { "t1.$it" }} " +
-            "from $MOVIE_TABLE as t1"
+        val EXPECTED_GET_MOVIES_PREFIX = "select ${MOVIE_COLUMNS.joinToString(", ") { "t1.$it" }} " +
+                "from $MOVIE_TABLE as t1"
         private val DEFAULT_GET_MOVIES = EXPECTED_GET_MOVIES_PREFIX
+
+        private const val ACTOR_TABLE = "actors"
+        private val ACTOR_COLUMNS = listOf(
+            "actor_name", "start_year_of_work", "end_year_of_work", "gender", "year_of_birth"
+        )
+        private val INSERT_ACTOR = "INSERT INTO $ACTOR_TABLE " +
+                "(${ACTOR_COLUMNS.joinToString(",")}) " +
+                "VALUES (${(1..ACTOR_COLUMNS.size).joinToString(",") { i -> "$$i"}}) " +
+                "ON CONFLICT ON CONSTRAINT actors_primary_key DO NOTHING"
+        private const val DELETE_ACTORS = "DELETE FROM $ACTOR_TABLE"
 
         private const val CAST_TABLE = "movie_casts"
         private val CAST_COLUMNS = listOf(
             "movie_title", "actor_name", "role"
         )
         private val INSERT_CAST = "INSERT INTO $CAST_TABLE " +
-            "(${CAST_COLUMNS.joinToString(",")}) " +
-            "VALUES (${(1..CAST_COLUMNS.size).joinToString(",") { i -> "$$i"}})"
+                "(${CAST_COLUMNS.joinToString(",")}) " +
+                "SELECT C.* " +
+                "FROM (VALUES (${(1..CAST_COLUMNS.size).joinToString(",") { i -> "$$i"}})) C " +
+                "(${CAST_COLUMNS.joinToString(",")}) " +
+                "WHERE EXISTS(SELECT 1 FROM $MOVIE_TABLE AS M WHERE M.movie_title = C.movie_title) " +
+                "AND EXISTS(SELECT 1 FROM $ACTOR_TABLE AS A WHERE A.actor_name = C.actor_name) " +
+                "ON CONFLICT ON CONSTRAINT movie_casts_primary_key DO NOTHING"
         private const val DELETE_CASTS = "DELETE FROM $CAST_TABLE"
 
-        private const val ACTOR_TABLE = "actors"
-        private val ACTOR_COLUMNS = listOf(
-            "name", "start_year_of_work", "end_year_of_work", "gender", "year_of_birth"
-        )
-        private val INSERT_ACTOR = "INSERT INTO $ACTOR_TABLE " +
-            "(${ACTOR_COLUMNS.joinToString(",")}) " +
-            "VALUES (${(1..ACTOR_COLUMNS.size).joinToString(",") { i -> "$$i"}})"
-        private const val DELETE_ACTORS = "DELETE FROM $ACTOR_TABLE"
         private val GET_ACTORS_IN_MOVIE = "SELECT ${ACTOR_COLUMNS.joinToString(",") { "A.$it" }} " +
-            "FROM $ACTOR_TABLE A " +
-            "INNER JOIN $CAST_TABLE C ON C.actor_name = A.name " +
-            "WHERE C.movie_title = $1 " +
-            "ORDER BY A.name ASC"
+                "FROM $ACTOR_TABLE A " +
+                "INNER JOIN $CAST_TABLE C ON C.actor_name = A.actor_name " +
+                "WHERE C.movie_title = $1 " +
+                "ORDER BY A.actor_name ASC"
 
-        private const val DEFAULT_MOVIE_ORDER_BY = " ORDER BY t1.year_released DESC"
-        private const val LIMIT_OFFSET_CLAUSES = " LIMIT %s OFFSET %s"
+        private const val OUTER_GET_MOVIES_COUNT = "SELECT COUNT(*) FROM (%s) AS sub"
+        private const val OUTER_GET_MOVIES = "SELECT * FROM (%s) AS sub " +
+                "ORDER BY sub.year_released DESC LIMIT %s OFFSET %s"
 
         fun addSchemaToQuery(query: String): String {
             val tableSchemas = listOf(
@@ -143,9 +152,28 @@ class MovieStore(private val pgPool: PgPool) {
             .await()
     }
 
+    private fun String.removeAfter(delimiter: String, includeDelimiter: Boolean = true): String {
+        val index = if (!includeDelimiter) {
+            indexOf(delimiter) + delimiter.length
+        } else {
+            indexOf(delimiter)
+        }
+        return if (index == -1) this else replaceRange(index, length, "")
+    }
+
+    private fun normalizeGeneratedSql(generatedSql: String?): String {
+        // The SQL parser in the translator doesn't support the "distinct on" clause, so we inject it after the fact
+        // to prevent duplicate movies being returned due to joins.
+        return generatedSql?.replace("select", "select distinct on (t1.movie_title)")
+            // Removing order by and group by clauses to simplify edge cases.
+            ?.removeAfter("order by")
+            ?.removeAfter("group by")
+            ?: DEFAULT_GET_MOVIES
+    }
+
     private fun toMovie(row: Row): Movie {
         return Movie(
-            title = row.getString("title"),
+            title = row.getString("movie_title"),
             yearReleased = row.getInteger("year_released"),
             director = row.getString("director_name"),
             producer = row.getString("producer_name"),
@@ -155,18 +183,38 @@ class MovieStore(private val pgPool: PgPool) {
         )
     }
 
-    suspend fun getMovies(generatedSql: String?, offset: Int, limit: Int): List<Movie> {
-        val baseSql = generatedSql ?: DEFAULT_GET_MOVIES
-        val updatedSql = if (baseSql.lowercase().contains("order by")) {
-            baseSql
-        } else {
-            baseSql.plus(DEFAULT_MOVIE_ORDER_BY)
+    suspend fun getMovieCount(generatedSql: String?): Int {
+        val baseSql = normalizeGeneratedSql(generatedSql)
+        val finalSql = OUTER_GET_MOVIES_COUNT.format(baseSql)
+
+        return pgPool.withConnection { connection ->
+            val promise = Promise.promise<Int>()
+            connection.preparedQuery(finalSql)
+                .execute()
+                .onComplete { result ->
+                    try {
+                        if (result.succeeded()) {
+                            promise.complete(result.result().first().getInteger(0))
+                        } else {
+                            throw IllegalStateException("Failed to get movies", result.cause())
+                        }
+                    } catch (t: Throwable) {
+                        promise.fail(t)
+                    }
+                }
+            promise.future().onComplete { connection.close() }
         }
-            .plus(LIMIT_OFFSET_CLAUSES.format(limit, offset))
+            .await()
+    }
+
+    suspend fun getMovies(generatedSql: String?, offset: Int, limit: Int): List<Movie> {
+        val baseSql = normalizeGeneratedSql(generatedSql)
+        // Due to the different distinct and order by clauses, the generated sql needs to go into a subquery
+        val finalSql = OUTER_GET_MOVIES.format(baseSql, limit, offset)
 
         return pgPool.withConnection { connection ->
             val promise = Promise.promise<List<Movie>>()
-            connection.preparedQuery(updatedSql)
+            connection.preparedQuery(finalSql)
                 .execute()
                 .onComplete { result ->
                     try {
@@ -186,7 +234,7 @@ class MovieStore(private val pgPool: PgPool) {
 
     private fun toActor(row: Row): Actor {
         return Actor(
-            name = row.getString("name"),
+            name = row.getString("actor_name"),
             startYearOfWork = row.getInteger("start_year_of_work"),
             endYearOfWork = row.getInteger("end_year_of_work"),
             gender = row.getString("gender"),

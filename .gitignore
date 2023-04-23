@@ -30,8 +30,7 @@ yarn-error.log*
 *.class
 *.bak
 
-# Package Files #
-*.jar
+# Package Files
 *.war
 *.ear
 
@@ -75,3 +74,10 @@ djl-serving/
 picard_model.pt
 
 docker/data/
+
+# Logs
+*.log
+*.log.gz
+
+# Python cache
+*/__pycache__/

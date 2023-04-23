@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - DjlSqlTranslatorTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>DjlSqlTranslatorTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.text2sql4j.translator.html">com.text2sql4j.translator</a> &gt; DjlSqlTranslatorTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">41m7.86s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">batchTranslate()</td>
+<td class="success">18.153s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">spider_dataset()</td>
+<td class="success">40m41.22s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">translate_expectedPrefix()</td>
+<td class="success">8.487s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>14:30:03.338 [Test worker] INFO com.text2sql4j.translator.DjlSqlTranslatorTest - test translate_expectedPrefix
+14:30:11.797 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 8 seconds
+14:30:11.801 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Output: 'select t1.concert_name from concert as t1 join stadium as t2 on t1.stadium_id = t2.stadium_id order by t2.capacity desc limit 1'
+14:30:11.815 [Test worker] INFO com.text2sql4j.translator.DjlSqlTranslatorTest - test batchTranslate
+14:30:29.963 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 17 seconds
+14:30:29.965 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Output: select count(*) from singer
+14:30:29.965 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Output: select count(*) from singer
+14:30:29.965 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Output: select name, country, age from singer order by age desc
+14:30:29.965 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Output: select Name, Country, Age from singer order by Age desc
+14:30:29.965 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Output: select avg(age), min(age), max(age) from singer where Country = &quot;France&quot;
+14:30:29.968 [Test worker] INFO com.text2sql4j.translator.DjlSqlTranslatorTest - test spider_dataset
+14:30:32.964 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:32:20.829 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 107 seconds
+14:32:25.340 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:32:34.054 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 8 seconds
+14:32:44.404 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 10 seconds
+14:32:46.887 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:32:48.871 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 1 seconds
+14:33:00.609 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 11 seconds
+14:33:08.512 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 7 seconds
+14:33:10.702 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:33:15.478 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:33:21.293 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 5 seconds
+14:33:25.079 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:34:54.583 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 89 seconds
+14:34:57.189 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:35:00.903 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:35:04.099 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:35:09.345 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 5 seconds
+14:37:09.348 [Test worker] DEBUG ai.djl.python.engine.PyProcess - predict[init=false] exception: java.util.concurrent.TimeoutException
+14:37:09.348 [Test worker] INFO ai.djl.python.engine.PyProcess - Stop process: -1:0
+14:37:09.350 [Test worker] INFO ai.djl.python.engine.PyProcess - Restart python process ...
+14:37:09.359 [ForkJoinPool.commonPool-worker-3] INFO ai.djl.python.engine.PyProcess - Start process: 19000 - retry: 1
+14:37:09.360 [ForkJoinPool.commonPool-worker-3] DEBUG ai.djl.python.engine.Connection - cmd: [/home/jake/miniconda3/bin/python, /home/jake/.djl.ai/python/0.21.0/djl_python_engine.py, --sock-type, unix, --sock-name, /tmp/djl_sock.19000, --model-dir, /home/jake/School/NLP/text2sql4j/translator/../python-translator, --entry-point, djl_model.py, --device-id, -1]
+14:37:09.363 [Test worker] ERROR com.text2sql4j.translator.DjlSqlTranslatorTest - Failed translating: Show the date and id of the transcript with at least 2 course results. | student_transcripts_tracking | addresses : address_id, line_1, line_2, line_3, city, zip_postcode, state_province_county, country, other_address_details | courses : course_id, course_name, course_description, other_details | departments : department_id, department_name, department_description, other_details | degree programs : degree_program_id, department_id, degree_summary_name, degree_summary_description, other_details | sections : section_id, course_id, section_name, section_description, other_details | semesters : semester_id, semester_name, semester_description, other_details | students : student_id, current_address_id, permanent_address_id, first_name, middle_name, last_name, cell_mobile_number, email_address, ssn, date_first_registered, date_left, other_student_details | student enrolment : student_enrolment_id, degree_program_id, semester_id, student_id, other_details | student enrolment courses : student_course_id, course_id, student_enrolment_id | transcripts : transcript_id, transcript_date, other_details | transcript contents : student_course_id, transcript_id
+ai.djl.translate.TranslateException: java.util.concurrent.TimeoutException
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:112)
+	at ai.djl.python.engine.PyPredictor.batchPredict(PyPredictor.java:65)
+	at com.text2sql4j.translator.DjlSqlTranslator.translateBatch(DjlSqlTranslator.kt:64)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate(DjlSqlTranslatorTest.kt:55)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate$default(DjlSqlTranslatorTest.kt:48)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest.spider_dataset(DjlSqlTranslatorTest.kt:156)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:90)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:85)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:62)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:193)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:113)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.concurrent.TimeoutException: null
+	at java.base/java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1886)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2021)
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:90)
+	... 90 common frames omitted
+14:37:09.369 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Retrying translation due to Python process restarting...
+14:37:09.606 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - 14453 - djl_python_engine started with args: ['--sock-type', 'unix', '--sock-name', '/tmp/djl_sock.19000', '--model-dir', '/home/jake/School/NLP/text2sql4j/translator/../python-translator', '--entry-point', 'djl_model.py', '--device-id', '-1']
+14:37:09.733 [W-19000-python-translat-stderr] INFO ai.djl.python.engine.PyProcess - ReaderThread(0) stopped - W-19000-python-translat-stderr
+14:37:09.733 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - ReaderThread(0) stopped - W-19000-python-translat-stdout
+14:37:10.834 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:37:10.834606: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory
+14:37:10.835 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:37:10.834690: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory
+14:37:10.835 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:37:10.834695: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+14:37:10.970 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - NumExpr defaulting to 8 threads.
+14:37:11.769 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Python engine started.
+14:37:19.111 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Model loaded in 7.3377717769999435 seconds
+14:37:19.113 [ForkJoinPool.commonPool-worker-3] INFO ai.djl.python.engine.PyProcess - Model [python-translator] initialized.
+14:37:34.584 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 15 seconds
+14:37:36.624 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:37:39.342 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:37:44.506 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 5 seconds
+14:37:52.133 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 7 seconds
+14:37:55.384 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:37:59.832 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:38:02.698 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:39:39.524 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 96 seconds
+14:39:44.663 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 5 seconds
+14:39:47.577 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:39:49.954 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:41:46.600 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 116 seconds
+14:41:50.378 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:43:31.854 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 101 seconds
+14:43:36.300 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:43:46.818 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 10 seconds
+14:45:46.819 [Test worker] DEBUG ai.djl.python.engine.PyProcess - predict[init=false] exception: java.util.concurrent.TimeoutException
+14:45:46.819 [Test worker] INFO ai.djl.python.engine.PyProcess - Stop process: -1:1
+14:45:46.821 [Test worker] INFO ai.djl.python.engine.PyProcess - Restart python process ...
+14:45:46.821 [ForkJoinPool.commonPool-worker-5] INFO ai.djl.python.engine.PyProcess - Start process: 19000 - retry: 2
+14:45:46.822 [ForkJoinPool.commonPool-worker-5] DEBUG ai.djl.python.engine.Connection - cmd: [/home/jake/miniconda3/bin/python, /home/jake/.djl.ai/python/0.21.0/djl_python_engine.py, --sock-type, unix, --sock-name, /tmp/djl_sock.19000, --model-dir, /home/jake/School/NLP/text2sql4j/translator/../python-translator, --entry-point, djl_model.py, --device-id, -1]
+14:45:46.822 [Test worker] ERROR com.text2sql4j.translator.DjlSqlTranslatorTest - Failed translating: Which models are lighter than 3500 but not built by the 'Ford Motor Company'? | car_1 | continents : ContId, Continent | countries : CountryId, CountryName, Continent | car makers : Id, Maker, FullName, Country | model list : ModelId, Maker, Model | car names : MakeId, Model, Make | cars data : Id, MPG, Cylinders, Edispl, Horsepower, Weight, Accelerate, Year
+ai.djl.translate.TranslateException: java.util.concurrent.TimeoutException
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:112)
+	at ai.djl.python.engine.PyPredictor.batchPredict(PyPredictor.java:65)
+	at com.text2sql4j.translator.DjlSqlTranslator.translateBatch(DjlSqlTranslator.kt:64)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate(DjlSqlTranslatorTest.kt:55)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate$default(DjlSqlTranslatorTest.kt:48)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest.spider_dataset(DjlSqlTranslatorTest.kt:156)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:90)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:85)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:62)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:193)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:113)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.concurrent.TimeoutException: null
+	at java.base/java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1886)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2021)
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:90)
+	... 90 common frames omitted
+14:45:46.824 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Retrying translation due to Python process restarting...
+14:45:46.980 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - 15052 - djl_python_engine started with args: ['--sock-type', 'unix', '--sock-name', '/tmp/djl_sock.19000', '--model-dir', '/home/jake/School/NLP/text2sql4j/translator/../python-translator', '--entry-point', 'djl_model.py', '--device-id', '-1']
+14:45:47.149 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - ReaderThread(1) stopped - W-19000-python-translat-stdout
+14:45:47.149 [W-19000-python-translat-stderr] INFO ai.djl.python.engine.PyProcess - ReaderThread(1) stopped - W-19000-python-translat-stderr
+14:45:48.084 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:45:48.084598: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory
+14:45:48.085 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:45:48.084676: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory
+14:45:48.085 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:45:48.084683: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+14:45:48.184 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - NumExpr defaulting to 8 threads.
+14:45:48.823 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Python engine started.
+14:45:55.986 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Model loaded in 7.153126822999184 seconds
+14:45:55.986 [ForkJoinPool.commonPool-worker-5] INFO ai.djl.python.engine.PyProcess - Model [python-translator] initialized.
+14:46:01.285 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:46:06.472 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 5 seconds
+14:46:21.139 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 14 seconds
+14:46:25.457 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:46:31.531 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 6 seconds
+14:46:34.902 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:46:37.589 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:46:40.141 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:47:02.278 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 22 seconds
+14:47:06.167 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:47:18.392 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 12 seconds
+14:47:27.524 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 9 seconds
+14:47:35.301 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 7 seconds
+14:49:35.309 [Test worker] DEBUG ai.djl.python.engine.PyProcess - predict[init=false] exception: java.util.concurrent.TimeoutException
+14:49:35.309 [Test worker] INFO ai.djl.python.engine.PyProcess - Stop process: -1:2
+14:49:35.310 [Test worker] INFO ai.djl.python.engine.PyProcess - Restart python process ...
+14:49:35.310 [ForkJoinPool.commonPool-worker-7] INFO ai.djl.python.engine.PyProcess - Start process: 19000 - retry: 3
+14:49:35.311 [ForkJoinPool.commonPool-worker-7] DEBUG ai.djl.python.engine.Connection - cmd: [/home/jake/miniconda3/bin/python, /home/jake/.djl.ai/python/0.21.0/djl_python_engine.py, --sock-type, unix, --sock-name, /tmp/djl_sock.19000, --model-dir, /home/jake/School/NLP/text2sql4j/translator/../python-translator, --entry-point, djl_model.py, --device-id, -1]
+14:49:35.311 [Test worker] ERROR com.text2sql4j.translator.DjlSqlTranslatorTest - Failed translating: What is the area code in which the most voters voted? | voter_1 | area code state : area_code, state | contestants : contestant_number, contestant_name | votes : vote_id, phone_number, state, contestant_number, created
+ai.djl.translate.TranslateException: java.util.concurrent.TimeoutException
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:112)
+	at ai.djl.python.engine.PyPredictor.batchPredict(PyPredictor.java:65)
+	at com.text2sql4j.translator.DjlSqlTranslator.translateBatch(DjlSqlTranslator.kt:64)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate(DjlSqlTranslatorTest.kt:55)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate$default(DjlSqlTranslatorTest.kt:48)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest.spider_dataset(DjlSqlTranslatorTest.kt:156)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:90)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:85)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:62)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:193)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:113)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.concurrent.TimeoutException: null
+	at java.base/java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1886)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2021)
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:90)
+	... 90 common frames omitted
+14:49:35.317 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Retrying translation due to Python process restarting...
+14:49:35.531 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - 15100 - djl_python_engine started with args: ['--sock-type', 'unix', '--sock-name', '/tmp/djl_sock.19000', '--model-dir', '/home/jake/School/NLP/text2sql4j/translator/../python-translator', '--entry-point', 'djl_model.py', '--device-id', '-1']
+14:49:35.571 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - ReaderThread(2) stopped - W-19000-python-translat-stdout
+14:49:35.571 [W-19000-python-translat-stderr] INFO ai.djl.python.engine.PyProcess - ReaderThread(2) stopped - W-19000-python-translat-stderr
+14:49:36.825 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:49:36.825651: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory
+14:49:36.826 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:49:36.825726: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory
+14:49:36.826 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 14:49:36.825731: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+14:49:36.994 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - NumExpr defaulting to 8 threads.
+14:49:37.796 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Python engine started.
+14:49:44.652 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Model loaded in 6.851915437999196 seconds
+14:49:44.653 [ForkJoinPool.commonPool-worker-7] INFO ai.djl.python.engine.PyProcess - Model [python-translator] initialized.
+14:51:19.345 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 94 seconds
+14:51:22.307 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:51:25.403 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:51:34.738 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 9 seconds
+14:51:45.747 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 11 seconds
+14:51:48.554 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:51:51.762 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:52:03.531 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 11 seconds
+14:53:38.181 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 94 seconds
+14:54:03.148 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 24 seconds
+14:54:12.160 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 9 seconds
+14:54:17.760 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 5 seconds
+14:54:20.675 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:54:28.455 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 7 seconds
+14:54:30.965 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:54:40.334 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 9 seconds
+14:54:49.089 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 8 seconds
+14:54:52.658 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:54:58.718 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 6 seconds
+14:55:01.699 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:55:14.534 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 12 seconds
+14:55:19.427 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:55:22.325 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+14:55:25.497 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:55:28.933 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+14:55:35.046 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 6 seconds
+14:55:41.365 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 6 seconds
+14:55:49.241 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 7 seconds
+14:55:57.271 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 8 seconds
+14:56:01.483 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:57:50.364 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 108 seconds
+14:57:55.260 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+14:59:39.966 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 104 seconds
+15:01:37.130 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 117 seconds
+15:01:54.923 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 17 seconds
+15:01:58.832 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+15:03:42.359 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 103 seconds
+15:03:45.535 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+15:05:19.555 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 94 seconds
+15:05:29.532 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 9 seconds
+15:05:34.593 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 5 seconds
+15:05:37.268 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 2 seconds
+15:05:41.822 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 4 seconds
+15:07:14.790 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 92 seconds
+15:08:37.628 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 82 seconds
+15:08:41.093 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 3 seconds
+15:08:53.872 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 12 seconds
+15:10:53.880 [Test worker] DEBUG ai.djl.python.engine.PyProcess - predict[init=false] exception: java.util.concurrent.TimeoutException
+15:10:53.880 [Test worker] INFO ai.djl.python.engine.PyProcess - Stop process: -1:3
+15:10:53.882 [Test worker] INFO ai.djl.python.engine.PyProcess - Restart python process ...
+15:10:53.882 [ForkJoinPool.commonPool-worker-9] INFO ai.djl.python.engine.PyProcess - Start process: 19000 - retry: 4
+15:10:53.883 [ForkJoinPool.commonPool-worker-9] DEBUG ai.djl.python.engine.Connection - cmd: [/home/jake/miniconda3/bin/python, /home/jake/.djl.ai/python/0.21.0/djl_python_engine.py, --sock-type, unix, --sock-name, /tmp/djl_sock.19000, --model-dir, /home/jake/School/NLP/text2sql4j/translator/../python-translator, --entry-point, djl_model.py, --device-id, -1]
+15:10:53.882 [Test worker] ERROR com.text2sql4j.translator.DjlSqlTranslatorTest - Failed translating: Who are enrolled in 2 degree programs in one semester? List the first name, middle name and last name and the id. | student_transcripts_tracking | addresses : address_id, line_1, line_2, line_3, city, zip_postcode, state_province_county, country, other_address_details | courses : course_id, course_name, course_description, other_details | departments : department_id, department_name, department_description, other_details | degree programs : degree_program_id, department_id, degree_summary_name, degree_summary_description, other_details | sections : section_id, course_id, section_name, section_description, other_details | semesters : semester_id, semester_name, semester_description, other_details | students : student_id, current_address_id, permanent_address_id, first_name, middle_name, last_name, cell_mobile_number, email_address, ssn, date_first_registered, date_left, other_student_details | student enrolment : student_enrolment_id, degree_program_id, semester_id, student_id, other_details | student enrolment courses : student_course_id, course_id, student_enrolment_id | transcripts : transcript_id, transcript_date, other_details | transcript contents : student_course_id, transcript_id
+ai.djl.translate.TranslateException: java.util.concurrent.TimeoutException
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:112)
+	at ai.djl.python.engine.PyPredictor.batchPredict(PyPredictor.java:65)
+	at com.text2sql4j.translator.DjlSqlTranslator.translateBatch(DjlSqlTranslator.kt:64)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate(DjlSqlTranslatorTest.kt:55)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest$Companion.retryBatchTranslate$default(DjlSqlTranslatorTest.kt:48)
+	at com.text2sql4j.translator.DjlSqlTranslatorTest.spider_dataset(DjlSqlTranslatorTest.kt:156)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:90)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:85)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:62)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:193)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:113)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.concurrent.TimeoutException: null
+	at java.base/java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1886)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2021)
+	at ai.djl.python.engine.PyProcess.predict(PyProcess.java:90)
+	... 90 common frames omitted
+15:10:53.891 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Retrying translation due to Python process restarting...
+15:10:54.042 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - 15702 - djl_python_engine started with args: ['--sock-type', 'unix', '--sock-name', '/tmp/djl_sock.19000', '--model-dir', '/home/jake/School/NLP/text2sql4j/translator/../python-translator', '--entry-point', 'djl_model.py', '--device-id', '-1']
+15:10:54.179 [W-19000-python-translat-stderr] INFO ai.djl.python.engine.PyProcess - ReaderThread(3) stopped - W-19000-python-translat-stderr
+15:10:54.179 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - ReaderThread(3) stopped - W-19000-python-translat-stdout
+15:10:55.153 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 15:10:55.153480: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory
+15:10:55.153 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 15:10:55.153538: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory
+15:10:55.153 [W-19000-python-translat-stderr] WARN ai.djl.python.engine.PyProcess - 2023-04-22 15:10:55.153543: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+15:10:55.259 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - NumExpr defaulting to 8 threads.
+15:10:55.915 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Python engine started.
+15:11:02.915 [W-19000-python-translat-stdout] INFO ai.djl.python.engine.PyProcess - Model loaded in 6.98869296400153 seconds
+15:11:02.915 [ForkJoinPool.commonPool-worker-9] INFO ai.djl.python.engine.PyProcess - Model [python-translator] initialized.
+15:11:11.160 [Test worker] DEBUG com.text2sql4j.translator.DjlSqlTranslatorTest - Translation Time: 7 seconds
+15:11:11.177 [Test worker] INFO com.text2sql4j.translator.DjlSqlTranslatorTest - Prediction Accuracy: 61.234432%
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.0.2</a> at Apr 22, 2023, 3:11:11 PM</p>
+</div>
+</div>
+</body>
+</html>

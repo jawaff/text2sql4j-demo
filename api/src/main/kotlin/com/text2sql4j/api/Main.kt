@@ -73,30 +73,26 @@ suspend fun startVertx(doInsertDataset: Boolean): Vertx {
         PoolOptions().setMaxSize(connectionPoolSize).setShared(true)
     )
 
-    coroutineScope {
-        launch {
-            vertx.deployVerticle(
-                MigrationVerticle(
-                    "$databaseHost:$databasePort",
-                    databaseName,
-                    databaseUsername,
-                    databasePassword
-                )
-            )
-                .onFailure { killPrematurely("Failed to deploy Migration Verticle", it) }
-                .await()
-        }
-        launch {
-            vertx.deployVerticle(TranslatorVerticle(Paths.get("../python-translator/")))
-                .onFailure { killPrematurely("Failed to deploy Translator Verticle", it) }
-                .await()
-        }
-        launch {
-            vertx.deployVerticle(RESTVerticle(pgPool, doInsertDataset))
-                .onFailure { killPrematurely("Failed to deploy REST Server", it) }
-                .await()
-        }
-    }
+    LOGGER.info("Starting Server")
+    vertx.deployVerticle(
+        MigrationVerticle(
+            "$databaseHost:$databasePort",
+            databaseName,
+            databaseUsername,
+            databasePassword
+        )
+    )
+        .onFailure { killPrematurely("Failed to deploy Migration Verticle", it) }
+        .await()
+
+    vertx.deployVerticle(TranslatorVerticle(Paths.get("../python-translator/")))
+        .onFailure { killPrematurely("Failed to deploy Translator Verticle", it) }
+        .await()
+
+    vertx.deployVerticle(RESTVerticle(pgPool, doInsertDataset))
+        .onFailure { killPrematurely("Failed to deploy REST Server", it) }
+        .await()
+    LOGGER.info("Started Server")
 
     return vertx
 }

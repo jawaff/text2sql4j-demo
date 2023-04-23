@@ -3,6 +3,9 @@ properties:
   generatedSql:
     type: string
     nullable: true
+  generatedSqlValid:
+    type: boolean
+    nullable: true
   moviesWithActors:
     type: array
     items:

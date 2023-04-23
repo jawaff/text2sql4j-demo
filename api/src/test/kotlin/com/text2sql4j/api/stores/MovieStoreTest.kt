@@ -9,12 +9,14 @@ import com.text2sql4j.api.models.movies.ColorProcess
 import com.text2sql4j.api.models.movies.ActorRole
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.random.Random
 
 class MovieStoreTest {
+    @AfterEach
     @BeforeEach
     fun clearDatabase() {
         TestSession.clearDatabase()
@@ -63,7 +65,7 @@ class MovieStoreTest {
 
             val expectedMovie = expectedMovies[0]
             val fakeGeneratedSql = MovieStore.EXPECTED_GET_MOVIES_PREFIX
-                .plus(" WHERE t1.title = '${expectedMovie.title}'")
+                .plus(" WHERE t1.movie_title = '${expectedMovie.title}'")
 
             val results = TestSession.movieStore.getMovies(fakeGeneratedSql, 0, 10)
             Assertions.assertThat(results)
@@ -73,7 +75,7 @@ class MovieStoreTest {
     }
 
     @Test
-    fun getMovies_generatedSql_customOrderBy() {
+    fun getMovies_generatedSql_orderByGroupByIgnored() {
         runBlocking {
             val expectedMovies = (0 until 5).map {
                 Movie(
@@ -86,11 +88,12 @@ class MovieStoreTest {
                     genre = Genre.values().random(),
                 )
             }
-                .sortedBy { it.title }
+                .sortedByDescending { it.yearReleased }
             TestSession.movieStore.insertMovies(expectedMovies)
 
             val fakeGeneratedSql = MovieStore.EXPECTED_GET_MOVIES_PREFIX
-                .plus(" ORDER BY t1.title ASC")
+                // Group by and order by clauses should be ignored and not affect the results.
+                .plus(" group by t1.year_released order by t1.movie_title ASC")
 
             val results = TestSession.movieStore.getMovies(fakeGeneratedSql, 0, 10)
             Assertions.assertThat(results)
@@ -179,6 +182,39 @@ class MovieStoreTest {
             Assertions.assertThat(results)
                 .hasSize(expectedActorsForMovie.size)
                 .isEqualTo(expectedActorsForMovie)
+        }
+    }
+
+    @Test
+    fun getMoviesCount() {
+        runBlocking {
+            val expectedMovies = (0 until 5).map {
+                Movie(
+                    title = UUID.randomUUID().toString(),
+                    yearReleased = Random.nextInt(),
+                    director = UUID.randomUUID().toString(),
+                    producer = UUID.randomUUID().toString(),
+                    studio = UUID.randomUUID().toString(),
+                    colorProcess = ColorProcess.values().random(),
+                    genre = Genre.values().random(),
+                )
+            }
+                .sortedByDescending { it.yearReleased }
+            TestSession.movieStore.insertMovies(expectedMovies)
+
+            val expectedMovie = expectedMovies[0]
+            val fakeGeneratedSql = MovieStore.EXPECTED_GET_MOVIES_PREFIX
+                .plus(" WHERE t1.movie_title = '${expectedMovie.title}'")
+
+            TestSession.movieStore.getMovieCount(fakeGeneratedSql)
+                .let { count ->
+                    Assertions.assertThat(count).isEqualTo(1)
+                }
+
+            TestSession.movieStore.getMovieCount(null)
+                .let { count ->
+                    Assertions.assertThat(count).isEqualTo(expectedMovies.size)
+                }
         }
     }
 }

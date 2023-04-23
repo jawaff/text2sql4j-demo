@@ -19,7 +19,7 @@ paths:
           description: The input query to be used for movie retrieval.
           schema:
             type: string
-            maxLength: 512
+            maxLength: 256
         - name: limit
           in: query
           required: false

@@ -36,14 +36,14 @@ class PicardLogitsProcessor(LogitsProcessor):
     - If the top token uses an incorrect literal for comparing a field, then that token is invalid.
     '''
     def __init__(
-        self,
-        tokenizer: AutoTokenizer,
-        eos_token_id: int,
-        filter_value: float = -float("Inf"),
-        max_tokens_to_check: int = 1,
-        is_incremental: bool = True,
-        forced_prefix_ids: List[int] = [],
-        stop_words_ids: List[List[int]] = []
+            self,
+            tokenizer: AutoTokenizer,
+            eos_token_id: int,
+            filter_value: float = -float("Inf"),
+            max_tokens_to_check: int = 1,
+            is_incremental: bool = True,
+            forced_prefix_ids: List[int] = [],
+            stop_words_ids: List[List[int]] = []
     ):
         '''
         Parameters
@@ -129,21 +129,21 @@ class PicardLogitsProcessor(LogitsProcessor):
                 return True
 
     def _mask(
-        self,
-        indices_to_remove: torch.Tensor,
-        batch_idx: int,
-        input_ids_batch: torch.Tensor,
-        top_token: torch.Tensor,
+            self,
+            indices_to_remove: torch.Tensor,
+            batch_idx: int,
+            input_ids_batch: torch.Tensor,
+            top_token: torch.Tensor,
     ) -> None:
         is_valid = self._check_token(input_ids=input_ids_batch.tolist(), token=top_token.item())
         if not is_valid:
             indices_to_remove[batch_idx, top_token] = True
 
     def _mask_top_k(
-        self,
-        indices_to_remove: torch.Tensor,
-        input_id_batches: torch.Tensor,
-        top_token_batches: torch.Tensor,
+            self,
+            indices_to_remove: torch.Tensor,
+            input_id_batches: torch.Tensor,
+            top_token_batches: torch.Tensor,
     ) -> None:
         for batch_idx, (input_ids_batch, top_token_batch) in enumerate(zip(input_id_batches, top_token_batches)):
             for top_token in top_token_batch:
@@ -155,10 +155,10 @@ class PicardLogitsProcessor(LogitsProcessor):
                 )
 
     def _batch_mask_top_k(
-        self,
-        indices_to_remove: torch.Tensor,
-        input_id_batches: torch.Tensor,
-        top_token_batches: torch.Tensor,
+            self,
+            indices_to_remove: torch.Tensor,
+            input_id_batches: torch.Tensor,
+            top_token_batches: torch.Tensor,
     ) -> None:
         results = []
         for batch_id, (input_id_batch, top_token_batch) in enumerate(zip(input_id_batches, top_token_batches)):

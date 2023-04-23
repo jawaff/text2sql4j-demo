@@ -3,15 +3,15 @@
 ## Setup
 
 - Installt Python 3.7 and set `PYTHON_EXECUTABLE` environment variable. Deep Java Library uses that variable to install requirements
-and spawn Python processes that host the Huggingface translator. If running tests in an IDE, then the python executable
-needs to have less strict permissions (e.g. `sudo chmod 777 $PYTHON_EXECUTABLE`). 
+  and spawn Python processes that host the Huggingface translator. If running tests in an IDE, then the python executable
+  needs to have less strict permissions (e.g. `sudo chmod 777 $PYTHON_EXECUTABLE`).
 
 ```shell
 export PYTHON_EXECUTABLE=/home/jake/miniconda3/bin/python
 ```
 
 - Run the following command to clone the djl-serving project and install its Python library, which will be used for
-running our Huggingface translator.
+  running our Huggingface translator.
 
 ```shell
 sh setup_djl_serving.sh
@@ -30,6 +30,12 @@ sudo apt install openjdk-11-jdk
 ```
 
 - Gradle is used for building and running tests, but the `./gradlew` file should ensure that it doesn't need to be downloaded.
+
+- Install docker-compose:
+
+```shell
+sudo apt install docker-compose
+```
 
 ## Library Dependencies
 
@@ -61,14 +67,14 @@ A TorchScript conversion was experimented with to allow the model to be used by 
 use cases for why a different language might be used: better multithreading support (i.e. bypassing Python GIL) and
 using execution environments better suited for another language (e.g. Android application).
 
-For the TorchScript conversion we're specifically interested in these files from the HuggingFace model: `pytorch_model.bin`, 
-`config.json` and `tokenizer.json`. The first two need to be converted to the `TorchScript` format and the `tokenizer.json` 
+For the TorchScript conversion we're specifically interested in these files from the HuggingFace model: `pytorch_model.bin`,
+`config.json` and `tokenizer.json`. The first two need to be converted to the `TorchScript` format and the `tokenizer.json`
 has the vocabulary and will be used to create a tokenizer.
 
 The `./model-conversion/` directory holds a Jupiyter notebook that was used for converting our downloaded model into
 the TorchScript format. It may be out of date since it was abandoned, but was working at one point. After more research
 it seems that the TorchScript conversion wasn't entirely correct because it didn't make use of Huggingface's `model.generate()`
-function during the tracing. Deep Java Library doesn't yet have text generation support at the moment, so that will not 
+function during the tracing. Deep Java Library doesn't yet have text generation support at the moment, so that will not
 be explored further. This experiment would have worked if we only needed classification or a non-autoregressive model.
 
 ## Running
@@ -89,8 +95,44 @@ Run the following commands to execute the Java unit tests:
 ```shell
 cd docker
 sudo docker-compose up -d
-./gradlew test
+sh gradlew test
 ```
+
+The output from the tests that I ran can be found in the `./test-output/` directory. Just open the `index.html` files
+for each module and the standard out for the tests is available. There the prediction accuracy for the Spider evaluation
+can be seen, which is about `61%`. My own take on the content overlap evaluation strategy was used to calculate that
+accuracy. The total number of expected output tokens for all translations (while ignoring the few timeout failures)
+is compared against the matched tokens found in the content overlap to determine the overall accuracy.
+
+IMPORTANT NOTE:
+
+It should be noted that expected queries with more tokens will impact the overall prediction accuracy more than queries
+with less tokens! That's just how my personal content overlap evaluation works and was fully intended to work in that
+manner. Different evaluation strategies exist and my strategy might not fully match what others have done. Call it
+Jake's content overlap evaluation algorithm if you care that it differs from how others have done it.
+
+### Start Swagger UI
+
+To experiment with the translator the backend can be stood up and tested using Swagger UI. If the database is empty,
+then a UCI movie dataset is inserted into the database.
+
+```shell
+cd docker
+# The database needs to be empty in order for the movie dataset to be inserted on startup of the backend!
+sudo rm -rf data
+sudo docker-compose up -d
+sh gradlew run
+```
+
+After starting the backend the Swagger UI is available at, `http://localhost:8081/swagger-ui`.
+
+![Swagger UI 1](images/swagger-ui-example1.png)
+
+![Swagger UI 2](images/swagger-ui-example2.png)
+
+![Swagger UI 3](images/swagger-ui-example3.png)
+
+![Swagger UI 4](images/swagger-ui-example4.png)
 
 ## References
 
