@@ -1,6 +1,8 @@
 \documentclass{beamer}
 \graphicspath{ {../images/} }
 \usepackage[export]{adjustbox}
+\usepackage{tcolorbox}
+\newtcbox{\codestyle}{on line,boxrule=0pt,boxsep=0pt,colback=lightgray,top=1pt,bottom=1pt,left=1pt,right=1pt,arc=0pt,fontupper=\ttfamily}
 
 \title{Text to SQL Generation}
 \author{Jake Waffle}
@@ -28,7 +30,9 @@
 \begin{frame}
 \frametitle{Architecture}
 
-\includegraphics[scale=0.4]{demo-architecture.drawio.png}
+\begin{center}
+\includegraphics[scale=0.38]{demo-architecture.drawio.png}
+\end{center}
 
 \end{frame}
 
@@ -54,9 +58,9 @@
 \frametitle{Pitfalls}
 
 \begin{itemize}[<+->]
-  \item PEG parsers aren't well suited for incrementally validating generated text in the logits processor
+  \item Conventional parsers don't work well with partial word tokens
   \item Text generation support in libraries is generally immature
-  \item Python's GIL makes Huggingface's `model.generate()` unable to be used in multiple threads
+  \item Python's Global Interpreter Lock interferes with using models in multiple threads (batching and multiple models can alleviate this)
 \end{itemize}
 
 \end{frame}
