@@ -1,0 +1,272 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Chowdhery%
+\ \protect \BOthers {.}}{%
+Chowdhery%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+chowdhery2022palm}
+\APACinsertmetastar {%
+chowdhery2022palm}%
+\begin{APACrefauthors}%
+Chowdhery, A.%
+, Narang, S.%
+, Devlin, J.%
+, Bosma, M.%
+, Mishra, G.%
+, Roberts, A.%
+\BDBL {}Fiedel, N.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{}{}.
+\newblock
+\APACrefbtitle {PaLM: Scaling Language Modeling with Pathways.} {Palm: Scaling
+  language modeling with pathways.}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Chung%
+\ \protect \BOthers {.}}{%
+Chung%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+chung2022scaling}
+\APACinsertmetastar {%
+chung2022scaling}%
+\begin{APACrefauthors}%
+Chung, H\BPBI W.%
+, Hou, L.%
+, Longpre, S.%
+, Zoph, B.%
+, Tay, Y.%
+, Fedus, W.%
+\BDBL {}Wei, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{}{}.
+\newblock
+\APACrefbtitle {Scaling Instruction-Finetuned Language Models.} {Scaling
+  instruction-finetuned language models.}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+{DJL}%
+}{%
+{DJL}%
+}{%
+{\protect \APACyear {{\protect \bibnodate {}}}}%
+}]{%
+djlserving}
+\APACinsertmetastar {%
+djlserving}%
+\begin{APACrefauthors}%
+{DJL}.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{{\protect \bibnodate {}}}{}{}.
+\newblock
+\APACrefbtitle {{D}eep {J}ava {L}ibrary {S}erving.} {{D}eep {J}ava {L}ibrary
+  {S}erving.}
+\newblock
+\APAChowpublished {\url{https://docs.djl.ai/docs/serving/index.html}}.
+\newblock
+\APACrefnote{[Accessed 24-Apr-2023]}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+{P}y{P}arsing%
+}{%
+{P}y{P}arsing%
+}{%
+{\protect \APACyear {{\protect \bibnodate {}}}}%
+}]{%
+githubPyparsing}
+\APACinsertmetastar {%
+githubPyparsing}%
+\begin{APACrefauthors}%
+{P}y{P}arsing.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{{\protect \bibnodate {}}}{}{}.
+\newblock
+\APACrefbtitle {{P}y{P}arsing: {P}ython library for creating {P}{E}{G}
+  parsers.} {{P}y{P}arsing: {P}ython library for creating {P}{E}{G} parsers.}
+\newblock
+\APAChowpublished {\url{https://github.com/pyparsing/pyparsing/}}.
+\newblock
+\APACrefnote{[Accessed 24-Apr-2023]}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Radford%
+\ \protect \BOthers {.}}{%
+Radford%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2018}}%
+}]{%
+radfordgpt2}
+\APACinsertmetastar {%
+radfordgpt2}%
+\begin{APACrefauthors}%
+Radford, A.%
+, Wu, J.%
+, Child, R.%
+, Luan, D.%
+, Amodei, D.%
+\BCBL {}\ \BBA {} Sutskever, I.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Language Models are Unsupervised Multitask Learners}
+  {Language models are unsupervised multitask learners}.{\BBCQ}
+\newblock
+\begin{APACrefURL}
+  \url{https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Raffel%
+\ \protect \BOthers {.}}{%
+Raffel%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2020}}%
+}]{%
+raffel2020exploring}
+\APACinsertmetastar {%
+raffel2020exploring}%
+\begin{APACrefauthors}%
+Raffel, C.%
+, Shazeer, N.%
+, Roberts, A.%
+, Lee, K.%
+, Narang, S.%
+, Matena, M.%
+\BDBL {}Liu, P\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2020}{}{}.
+\newblock
+\APACrefbtitle {Exploring the Limits of Transfer Learning with a Unified
+  Text-to-Text Transformer.} {Exploring the limits of transfer learning with a
+  unified text-to-text transformer.}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Scholak%
+, Schucher%
+\BCBL {}\ \BBA {} Bahdanau%
+}{%
+Scholak%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2021}}%
+}]{%
+scholak2021picard}
+\APACinsertmetastar {%
+scholak2021picard}%
+\begin{APACrefauthors}%
+Scholak, T.%
+, Schucher, N.%
+\BCBL {}\ \BBA {} Bahdanau, D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{}{}.
+\newblock
+\APACrefbtitle {PICARD: Parsing Incrementally for Constrained Auto-Regressive
+  Decoding from Language Models.} {Picard: Parsing incrementally for
+  constrained auto-regressive decoding from language models.}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Wiederhold%
+}{%
+Wiederhold%
+}{%
+{\protect \APACyear {1999}}%
+}]{%
+misc_movie_132}
+\APACinsertmetastar {%
+misc_movie_132}%
+\begin{APACrefauthors}%
+Wiederhold, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1999}{}{}.
+\newblock
+\APACrefbtitle {{Movie}.} {{Movie}.}
+\newblock
+\APAChowpublished {UCI Machine Learning Repository}.
+\newblock
+\APACrefnote{{DOI}: \url{10.24432/C5SW2R}}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Wolf%
+\ \protect \BOthers {.}}{%
+Wolf%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2020}}%
+}]{%
+wolf2020huggingfaces}
+\APACinsertmetastar {%
+wolf2020huggingfaces}%
+\begin{APACrefauthors}%
+Wolf, T.%
+, Debut, L.%
+, Sanh, V.%
+, Chaumond, J.%
+, Delangue, C.%
+, Moi, A.%
+\BDBL {}Rush, A\BPBI M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2020}{}{}.
+\newblock
+\APACrefbtitle {HuggingFace's Transformers: State-of-the-art Natural Language
+  Processing.} {Huggingface's transformers: State-of-the-art natural language
+  processing.}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Yu%
+\ \protect \BOthers {.}}{%
+Yu%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2019}}%
+}]{%
+yu2019spider}
+\APACinsertmetastar {%
+yu2019spider}%
+\begin{APACrefauthors}%
+Yu, T.%
+, Zhang, R.%
+, Yang, K.%
+, Yasunaga, M.%
+, Wang, D.%
+, Li, Z.%
+\BDBL {}Radev, D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{}{}.
+\newblock
+\APACrefbtitle {Spider: A Large-Scale Human-Labeled Dataset for Complex and
+  Cross-Domain Semantic Parsing and Text-to-SQL Task.} {Spider: A large-scale
+  human-labeled dataset for complex and cross-domain semantic parsing and
+  text-to-sql task.}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}
