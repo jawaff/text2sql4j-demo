@@ -21,6 +21,13 @@ class DjlSqlTranslator(modelPath: Path) : SqlTranslator {
 
     private val model: ZooModel<Input, Output>
     private val predictor: Predictor<Input, Output>
+    // TODO Add a cachebuilder for past query -> SQL translations.
+    // TODO Constrain the amount of in progress translations to some number (one by default) and add
+    // the queries to a scheduled batch (with some size limit, respond with an unavailable server message for additional queries)
+    // if all available Python processes are in use.
+
+    // Maybe calls to translate() add a future to a queue that gets populated after the actual translation executes.
+    // Then translate() suspends and waits for that work to be done on a separate thread.
 
     init {
         val pythonExe = Utils.getenv(PYTHON_EXE_ENV_VAR)

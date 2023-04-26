@@ -88,3 +88,5 @@ docker/data/
 *.out
 *.snm
 *.toc
+*.blg
+*.bbl
