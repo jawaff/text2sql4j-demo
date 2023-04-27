@@ -158,7 +158,7 @@ class DjlSqlTranslatorTest {
                 LOGGER.trace("Output: '$sqlOutput'")
                 LOGGER.trace("Expected Output: '${queryInfo.query}'")
 
-                LOGGER.trace("${(i+1).toFloat() / count.toFloat() * 100f}% Completed")
+                LOGGER.trace("${(i + 1).toFloat() / count.toFloat() * 100f}% Completed")
 
                 totalExpectedTokens += queryInfo.query_toks.size
                 countMatchedTokens(sqlOutput, queryInfo.query_toks)
